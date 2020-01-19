@@ -1,0 +1,22 @@
+<ion-header no-border>
+  <ion-toolbar mode="ios">
+    <ion-title>Latest Transactions</ion-title>
+    <ion-buttons slot="end" class="header-btns">
+      <ion-menu-toggle>
+        <ion-icon src="../assets/icon/menu.svg"></ion-icon>
+      </ion-menu-toggle>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="blockchain.txs.length > 0" padding>
+    <ion-item *ngFor="let tx of blockchain.txs" detail>
+      <ion-label>{{ tx }}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="blockchain.txs.length === 0" text-center margin-top padding-top>
+    <ion-spinner name="bubbles"></ion-spinner>
+  </ion-list>
+</ion-content>

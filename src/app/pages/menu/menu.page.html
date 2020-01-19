@@ -1,0 +1,40 @@
+<ion-app>
+
+  <ion-menu side="end" menuId='m1'>
+    <ion-header no-border>
+      <ion-toolbar>
+        <ion-title>
+          Chain Explorer
+        </ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-list>
+        <ion-menu-toggle>
+          <ion-item routerLink="/menu/blocks">
+            <img src="../assets/icon/ledger.png">
+            <ion-label padding>Elastos Blockchain</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle>
+          <ion-item (click)="minimizeApp()">
+              <img src="../assets/icon/minimize.png">
+            <ion-label padding>Minimize App</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle>
+          <ion-item (click)="closeApp()">
+              <img src="../assets/icon/exit.png">
+            <ion-label padding>Close App</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <ion-router-outlet main></ion-router-outlet>
+
+</ion-app>

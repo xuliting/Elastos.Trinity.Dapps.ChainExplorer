@@ -1,0 +1,43 @@
+<ion-header no-border>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start" class="header-btns">
+      <ion-button (click)="switchMode()" [class.highlight]="tableStyle === 'bootstrap'">
+        <ion-icon name="sunny" mode="ios"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Latest Blocks</ion-title>
+    <ion-buttons slot="end" class="header-btns">
+      <ion-menu-toggle>
+        <ion-icon src="../assets/icon/menu.svg"></ion-icon>
+      </ion-menu-toggle>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- <ion-list *ngIf="blockchain.blocks.length > 0">
+    <ion-item *ngFor="let block of blockchain.blocks">
+      <ion-label>{{ block.merkleroot }}</ion-label>
+    </ion-item>
+  </ion-list> -->
+
+  <ion-list  *ngIf="blockchain.blocks.length > 0" no-padding no-margin>
+    <ngx-datatable
+      [rows]="blockchain.blocks"
+      [ngClass]="tableStyle"
+      [rowHeight]="'auto'"
+      [headerHeight]="40"
+      [rowClass]="getRowClass.bind(this)"
+    >
+      <ngx-datatable-column name="Height" prop="height" maxWidth="100"></ngx-datatable-column>
+      <ngx-datatable-column name="Producer" prop="poolInfo.poolName" maxWidth="200"></ngx-datatable-column>
+      <ngx-datatable-column name="Time" prop="date" maxWidth="150"></ngx-datatable-column>
+      <!-- <ngx-datatable-column name="Amount" prop="txlength"></ngx-datatable-column> -->
+    </ngx-datatable>
+  </ion-list>
+
+  <ion-list *ngIf="blockchain.blocks.length === 0" text-center margin-top padding-top>
+    <ion-spinner name="bubbles"></ion-spinner>
+  </ion-list>
+</ion-content>

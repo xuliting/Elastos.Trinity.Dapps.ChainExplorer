@@ -1,0 +1,22 @@
+<ion-header no-border>
+  <ion-toolbar mode="ios">
+    <ion-title>Status</ion-title>
+    <ion-buttons slot="end" class="header-btns">
+      <ion-menu-toggle>
+        <ion-icon src="../assets/icon/menu.svg"></ion-icon>
+      </ion-menu-toggle>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list  *ngIf="blockchain.blocks.length > 0">
+    <ion-item>
+      <ion-label>Current Height: {{ blockchain.blocks[0].height }}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="blockchain.blocks.length === 0" text-center margin-top padding-top>
+    <ion-spinner name="bubbles"></ion-spinner>
+  </ion-list>
+</ion-content>

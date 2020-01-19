@@ -1,0 +1,22 @@
+<ion-header no-border>
+  <ion-toolbar mode="ios">
+    <ion-title>Rich List</ion-title>
+    <ion-buttons slot="end" class="header-btns">
+      <ion-menu-toggle>
+        <ion-icon src="../assets/icon/menu.svg"></ion-icon>
+      </ion-menu-toggle>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="blockchain.ranks.length > 0" padding>
+    <ion-item *ngFor="let rank of blockchain.ranks" detail>
+      <ion-label>{{ rank.address }}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="blockchain.ranks.length === 0" text-center margin-top padding-top>
+    <ion-spinner name="bubbles"></ion-spinner>
+  </ion-list>
+</ion-content>
