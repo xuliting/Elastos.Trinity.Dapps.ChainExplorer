@@ -2,8 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { LoadingController, AlertController } from '@ionic/angular';
+
 import { Block, FormattedBlock } from '../models/blocks.model';
 import { Rank } from '../models/ranks.model';
+import { Router, NavigationExtras } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +18,12 @@ export class BlockchainService {
   public ranks: Rank[] = [];
   public txs: string[] = [];
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    public loadingCtrl: LoadingController,
+    private alertCtrl: AlertController
+  ) { }
 
   init() {
     setInterval(() => {
@@ -49,7 +57,7 @@ export class BlockchainService {
 
   fetchBlocks() {
     console.log('Fetching Blocks..');
-    this.http.get<any>('https://blockchain.elastos.org/api/v1/blocks').subscribe((res: any) => {
+    this.http.get<any>('https://blockchain.elastos.org/api/v1/blocks?limit=20').subscribe((res: any) => {
       console.log('Blocks fetched', res);
       this.blocks = this.blocks.concat(res.blocks);
       this.blocks.forEach(block => {
@@ -84,6 +92,50 @@ export class BlockchainService {
       })
     });
     console.log('Updated Transactions', + this.txs);
+  }
+
+  transDetails(transaction: string) {
+    console.log('Fetching tx', transaction);
+    this.loading(transaction);
+
+    this.http.get<any>('https://blockchain.elastos.org/api/v1/tx/' + transaction).subscribe((res: any) => {
+      console.log('Tx fetched', res);
+      this.loadingCtrl.dismiss();
+
+      let props: NavigationExtras = {
+        queryParams: {
+          tx: JSON.stringify(res)
+        }
+      }
+      this.router.navigate(['/menu/trans/transaction'], props);
+
+    }, err => {
+      console.log(err.message);
+      this.loadingCtrl.dismiss();
+      this.transErr();
+    });
+  }
+
+  //// Controllers ////
+  async loading(tx: string) {
+    const loading = await this.loadingCtrl.create({
+      mode: "ios",
+      spinner: 'bubbles',
+      duration: 5000,
+      message: 'Loading Transaction...',
+      translucent: true,
+    });
+    return await loading.present();
+  }
+
+  async transErr() {
+    const alert = await this.alertCtrl.create({
+      mode: 'ios',
+      header: 'Transaction Fetch Failed',
+      message: 'There was en error fetching transaction',
+      buttons: ['OK']
+    });
+    await alert.present();
   }
 }
 

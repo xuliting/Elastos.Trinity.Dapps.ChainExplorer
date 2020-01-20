@@ -1,0 +1,137 @@
+<ion-header no-border>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start" class="header-btns">
+      <ion-button [routerLink]="['/menu/blocks']">
+        <ion-icon mode="ios" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Block Details</ion-title>
+    <ion-buttons slot="end" class="header-btns">
+      <ion-menu-toggle>
+        <ion-icon src="../assets/icon/menu.svg"></ion-icon>
+      </ion-menu-toggle>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="container" padding-top>
+
+    <ion-row>
+      <ion-col class="block-header">
+        <ion-img src="../assets/images/block.png"></ion-img> &nbsp;
+        <ion-label>{{ block.height }}</ion-label>
+      </ion-col>
+    </ion-row>
+
+    <!-- Block summary -->
+
+    <ion-row>
+      <ion-col size="12" class="section">
+        <h2>Block Summary</h2>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="details">
+      <h4>Height</h4>
+      <p>{{ block.height }}</p>
+    </ion-row>
+
+    <ion-row class="details">
+      <h4>Time</h4>
+      <p>{{ getDate(block.time)}} </p>
+    </ion-row>
+
+    <ion-row class="details">
+      <h4>Producer</h4>
+      <p>{{ block.poolInfo.poolName }}</p>
+    </ion-row>
+
+    <ion-row class="details">
+      <h4>Confirmations</h4>
+      <p>{{ block.confirmations }}</p>
+    </ion-row>
+
+    <ion-row class="details">
+      <h4>Size</h4>
+      <p>{{ block.size }}</p>
+    </ion-row>
+
+    <ion-row class="details">
+      <h4>Bits</h4>
+      <p>{{ block.bits }}</p>
+    </ion-row>
+
+    <ion-row class="details">
+      <h4>Difficulty</h4>
+      <p>{{ block.difficulty }}</p>
+    </ion-row>
+
+    <ion-row class="details">
+      <h4>Version</h4>
+      <p>{{ block.version }}</p>
+    </ion-row>
+
+    <ion-row class="details">
+      <h4>Nonce</h4>
+      <p>{{ block.nonce }}</p>
+    </ion-row>
+
+    <ion-row class="details">
+      <h4>Hash</h4>
+      <p class="overflow">{{ block.hash }}</p>
+    </ion-row>
+
+    <ion-row class="details">
+      <h4>Previous Block</h4>
+      <p class="overflow">{{ block.previousblockhash }}</p>
+    </ion-row>
+
+    <ion-row class="details">
+      <h4>Merkle Root</h4>
+      <p class="overflow">{{ block.merkleroot }}</p>
+    </ion-row>
+
+    <!-- Transactions -->
+
+    <ion-row padding-top>
+      <ion-col size="12" class="section">
+        <h2>Transaction Summary</h2>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="details">
+      <h4>Number of Transactions</h4>
+      <p>{{ block.txlength }}</p>
+    </ion-row>
+
+    <ion-row class="details">
+      <h4>Transactions</h4>
+      <p class="overflow" *ngFor="let tx of block.tx" (click)="blockchain.transDetails(tx)">{{ tx }}</p>
+    </ion-row>
+
+    <!-- Confirm Info -->
+
+    <ion-row padding-top>
+      <ion-col size="12" class="section">
+        <h2>Confirmation Summary</h2>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="details">
+      <h4>Sponsor</h4>
+      <p class="overflow">{{ block.confirmInfo.sponsor }}</p>
+    </ion-row>
+
+    <ion-row class="details">
+      <h4>Offset</h4>
+      <p>{{ block.confirmInfo.viewoffset }}</p>
+    </ion-row>
+
+    <ion-row class="details">
+      <h4>Votes List</h4>
+      <p class="overflow" *ngFor="let vote of block.confirmInfo.votes">{{ vote.signer }}</p>
+    </ion-row>
+
+  </ion-grid>
+</ion-content>

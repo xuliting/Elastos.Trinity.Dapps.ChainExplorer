@@ -17,6 +17,9 @@ const routes: Routes = [
       { path: 'txs', loadChildren: '../txs/txs.module#TxsPageModule' },
       { path: 'ranks', loadChildren: '../ranks/ranks.module#RanksPageModule' },
       { path: 'status', loadChildren: '../status/status.module#StatusPageModule' },
+      { path: 'block/:blockId', loadChildren: '../block-info/block-info.module#BlockInfoPageModule' },
+      { path: 'rank/:rankId', loadChildren: '../rank-info/rank-info.module#RankInfoPageModule' },
+      { path: 'trans/:transId', loadChildren: '../trans-info/trans-info.module#TransInfoPageModule' },
     ]
   },
   {

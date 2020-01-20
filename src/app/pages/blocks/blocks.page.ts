@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BlockchainService } from 'src/app/services/blockchain.service';
+import { Router, NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-blocks',
@@ -11,9 +12,22 @@ export class BlocksPage implements OnInit {
   public tableStyle: string = 'bootstrap';
   public lightMode: boolean = true;
 
-  constructor(public blockchain: BlockchainService) { }
+  constructor(
+    public blockchain: BlockchainService,
+    private router: Router,
+  ) { }
 
   ngOnInit() {
+  }
+
+  blockDetails(event) {
+    console.log(event.row);
+    let props: NavigationExtras = {
+      queryParams: {
+        block: JSON.stringify(event.row)
+      }
+    }
+    this.router.navigate(['/menu/block/event.row._id'], props);
   }
 
   //// Toggling bootstrap and dark theme ////

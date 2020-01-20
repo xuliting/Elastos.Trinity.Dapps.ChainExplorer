@@ -1,5 +1,10 @@
 <ion-header no-border>
   <ion-toolbar mode="ios">
+    <ion-buttons slot="start" class="header-btns">
+      <ion-button (click)="switchMode()" [class.highlight]="tableStyle === 'bootstrap'">
+        <ion-icon name="sunny" mode="ios"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>Rich List</ion-title>
     <ion-buttons slot="end" class="header-btns">
       <ion-menu-toggle>
@@ -10,10 +15,35 @@
 </ion-header>
 
 <ion-content>
-  <ion-list *ngIf="blockchain.ranks.length > 0" padding>
+  <!-- <ion-list *ngIf="blockchain.ranks.length > 0" padding>
     <ion-item *ngFor="let rank of blockchain.ranks" detail>
       <ion-label>{{ rank.address }}</ion-label>
     </ion-item>
+  </ion-list> -->
+
+  <ion-list  *ngIf="blockchain.ranks.length > 0" no-padding no-margin>
+    <ngx-datatable
+      [rows]="blockchain.ranks"
+      [ngClass]="tableStyle"
+      [rowHeight]="'auto'"
+      [headerHeight]="40"
+      [rowClass]="getRowClass.bind(this)"
+      (activate)="rankDetails($event)"
+    >
+      <ngx-datatable-column name="Rank" maxWidth="80">
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+          <p no-margin>{{ blockchain.ranks.indexOf(row) + 1 }}</p>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Balance" prop="balance" maxWidth="210"></ngx-datatable-column>
+      <ngx-datatable-column name="Percentage" prop="percentage" maxWidth="120"></ngx-datatable-column>
+      <ngx-datatable-column>
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+          <a><ion-icon name="arrow-forward" mode="ios"></ion-icon></a>
+        </ng-template>
+      </ngx-datatable-column>
+      <!-- <ngx-datatable-column name="Amount" prop="txlength"></ngx-datatable-column> -->
+    </ngx-datatable>
   </ion-list>
 
   <ion-list *ngIf="blockchain.ranks.length === 0" text-center margin-top padding-top>
