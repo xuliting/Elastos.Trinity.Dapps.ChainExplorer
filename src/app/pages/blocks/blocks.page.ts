@@ -11,6 +11,7 @@ export class BlocksPage implements OnInit {
 
   public tableStyle: string = 'bootstrap';
   public lightMode: boolean = true;
+  public block: string = "";
 
   constructor(
     public blockchain: BlockchainService,
@@ -18,6 +19,16 @@ export class BlocksPage implements OnInit {
   ) { }
 
   ngOnInit() {
+  }
+
+  searchBlock() {
+    if(!this.block) {
+      console.log('Input empty');
+      return;
+    } else {
+      console.log(this.block);
+      this.blockchain.blockDetails(this.block);
+    }
   }
 
   blockDetails(event) {

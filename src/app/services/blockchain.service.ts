@@ -27,22 +27,13 @@ export class BlockchainService {
 
   init() {
     setInterval(() => {
-      // this.fetchHeight();
       this.fetchBlocks();
     }, 5000);
 
     this.fetchRanks();
   }
 
-/*   fetchHeight() {
-    console.log('Fetching Height..');
-    this.http.get<any>('https://blockchain.elastos.org/api/v1/newblock').subscribe((res: any) => {
-      console.log('Height', res);
-    }, err => {
-      console.log(err);
-    })
-  } */
-
+  /******************************** Get Block/Tx/Address List ********************************/
   fetchRanks() {
     console.log('Fetching Ranks..');
     this.http.get<any>('https://blockchain.elastos.org/api/v1/addrs/richest-list').subscribe((res: any) => {
@@ -94,9 +85,32 @@ export class BlockchainService {
     console.log('Updated Transactions', + this.txs);
   }
 
+  /******************************** Get Block/Tx/Address Details ********************************/
+  blockDetails(block: string) {
+    console.log('Fetching block', block);
+    this.loading('block', block);
+
+    this.http.get<any>('https://blockchain.elastos.org/api/v1/block/' + block).subscribe((res: any) => {
+      console.log('Tx fetched', res);
+      this.loadingCtrl.dismiss();
+
+      let props: NavigationExtras = {
+        queryParams: {
+          block: JSON.stringify(res)
+        }
+      }
+      this.router.navigate(['/menu/block/', block], props);
+
+    }, err => {
+      console.log(err.message);
+      this.loadingCtrl.dismiss();
+      this.loadingErr('block', block);
+    });
+  }
+
   transDetails(transaction: string) {
     console.log('Fetching tx', transaction);
-    this.loading(transaction);
+    this.loading('transaction', transaction);
 
     this.http.get<any>('https://blockchain.elastos.org/api/v1/tx/' + transaction).subscribe((res: any) => {
       console.log('Tx fetched', res);
@@ -107,42 +121,67 @@ export class BlockchainService {
           tx: JSON.stringify(res)
         }
       }
-      this.router.navigate(['/menu/trans/transaction'], props);
+      this.router.navigate(['/menu/trans/', transaction], props);
 
     }, err => {
       console.log(err.message);
       this.loadingCtrl.dismiss();
-      this.transErr();
+      this.loadingErr('transaction', transaction);
     });
   }
 
-  //// Controllers ////
-  async loading(tx: string) {
+  addressDetails(address: string) {
+    console.log('Fetching address', address);
+    this.loading('address', address);
+
+    this.http.get<any>('https://blockchain.elastos.org/api/v1/txs/?address=' + address + '&pageNum=0').subscribe((res: any) => {
+      console.log('Address fetched', res);
+      this.loadingCtrl.dismiss();
+
+      let props: NavigationExtras = {
+        queryParams: {
+          address: JSON.stringify(res)
+        }
+      }
+      this.router.navigate(['/menu/rank/', address], props);
+
+    }, err => {
+      console.log(err.message);
+      this.loadingCtrl.dismiss();
+      this.loadingErr('address', address);
+    });
+  }
+
+  /******************************** Controllers ********************************/
+  async loading(type: string, value: string,) {
     const loading = await this.loadingCtrl.create({
       mode: "ios",
       spinner: 'bubbles',
-      duration: 5000,
-      message: 'Loading Transaction...',
+      message: 'Loading ' + type.charAt(0).toUpperCase() + type.slice(1) + '...',
       translucent: true,
     });
     return await loading.present();
   }
 
-  async transErr() {
+  async loadingErr(type: string, value: string) {
     const alert = await this.alertCtrl.create({
       mode: 'ios',
-      header: 'Transaction Fetch Failed',
-      message: 'There was en error fetching transaction',
+      header: type.charAt(0).toUpperCase() + type.slice(1) + ' Fetch Failed',
+      message: 'There was en error fetching ' + type,
       buttons: ['OK']
     });
     await alert.present();
   }
 }
 
-// Transactions
+
+// Blocks Ex:
+// https://blockchain.elastos.org/api/v1/blocks/?limit=20
+
+// Transaction Details Ex:
 // https://blockchain.elastos.org/api/v1/tx/3e179a902b315e059c9917474311c29d747ff1e0e0fbc37ce1e79ae0a564bc6c
 
-// Blocks
-// https://blockchain.elastos.org/api/v1/blocks/?limit=20
+// Block Details Ex:
+// https://blockchain.elastos.org/api/v1/block/136914236db07a6b21a99b207f8d1e45568de5a4d83823680eb2836f27069627/
 
 

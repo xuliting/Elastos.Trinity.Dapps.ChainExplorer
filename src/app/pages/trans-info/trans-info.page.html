@@ -75,13 +75,13 @@
         </ion-row>
 
         <ion-row class="details">
-          <h4>Total Payout</h4>
-          <p>{{ tx.valueOut }}</p>
+          <h4>Fees</h4>
+          <p>{{ tx.fees }}</p>
         </ion-row>
 
         <ion-row class="details">
-          <h4>Fees</h4>
-          <p>{{ tx.fees }}</p>
+          <h4>Total Payout</h4>
+          <p>{{ tx.valueOut }}</p>
         </ion-row>
 
         <ion-row class="details">
@@ -90,7 +90,7 @@
           </div>
           <ion-img src="../assets/images/tx.png"></ion-img>
           <div>
-            <p *ngFor="let x of tx.vout">{{ x.scriptPubKey.addresses[0].slice(0,30) }}...</p>
+            <p *ngFor="let x of tx.vout">{{ x.scriptPubKey.addresses[0].slice(0,25) }}...</p>
           </div>
         </ion-row>
       </div>
@@ -102,18 +102,18 @@
         </ion-row>
 
         <ion-row class="details">
-          <h4>Total Payout</h4>
-          <p>{{ tx.valueOut }}</p>
-        </ion-row>
-
-        <ion-row class="details">
           <h4>Fees</h4>
           <p>{{ tx.fees }}</p>
         </ion-row>
 
         <ion-row class="details">
+          <h4>Total Payout</h4>
+          <p>{{ tx.valueOut }}</p>
+        </ion-row>
+
+        <ion-row class="details">
           <h4>Sender</h4>
-          <p>{{ tx.vin[0].addr.slice(0,30) }}...</p>
+          <p>{{ tx.vin[0].addr.slice(0,25) }}...</p>
         </ion-row>
 
         <ion-row class="details">
@@ -122,7 +122,7 @@
           </div>
           <ion-img src="../assets/images/tx.png"></ion-img>
           <div>
-            <p *ngFor="let x of tx.vout">{{ x.scriptPubKey.addresses[0].slice(0,30) }}...</p>
+            <p *ngFor="let x of tx.vout">{{ x.scriptPubKey.addresses[0].slice(0,25) }}...</p>
           </div>
         </ion-row>
       </div>
@@ -134,18 +134,18 @@
         </ion-row>
 
         <ion-row class="details">
-          <h4>Total Payout</h4>
-          <p>{{ tx.valueOut }}</p>
-        </ion-row>
-
-        <ion-row class="details">
           <h4>Fees</h4>
           <p>{{ tx.fees }}</p>
         </ion-row>
 
         <ion-row class="details">
+          <h4>Total Payout</h4>
+          <p>{{ tx.valueOut }}</p>
+        </ion-row>
+
+        <ion-row class="details">
           <h4>Sender</h4>
-          <p>{{ tx.vin[0].addr.slice(0,30) }}...</p>
+          <p>{{ tx.vin[0].addr.slice(0,25) }}...</p>
         </ion-row>
 
         <ion-row class="details">
@@ -154,7 +154,7 @@
           </div>
           <ion-img src="../assets/images/tx.png"></ion-img>
           <div>
-            <p *ngFor="let x of tx.vout">{{ x.scriptPubKey.addresses[0].slice(0,30) }}...</p>
+            <p *ngFor="let x of tx.vout">{{ x.scriptPubKey.addresses[0].slice(0,25) }}...</p>
           </div>
         </ion-row>
       </div>

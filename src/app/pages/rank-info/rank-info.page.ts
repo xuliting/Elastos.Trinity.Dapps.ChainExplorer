@@ -27,4 +27,14 @@ export class RankInfoPage implements OnInit {
     });
   }
 
+  // For fetching rank details via api //
+  /* ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      if (params) {
+        this.address = JSON.parse(params.address);
+        console.log('Rank details', this.address);
+      }
+    });
+  } */
+
 }

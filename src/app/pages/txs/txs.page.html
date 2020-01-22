@@ -10,6 +10,17 @@
 </ion-header>
 
 <ion-content>
+
+  <div class="search-container">
+    <ion-searchbar
+      mode="ios"
+      placeholder=" Search for Block"
+      [(ngModel)]="tx"
+      (keyup.enter)="searchTx()"
+    >
+    </ion-searchbar>
+  </div>
+
   <ion-list *ngIf="blockchain.txs.length > 0" padding>
     <ion-item *ngFor="let tx of blockchain.txs" detail (click)="blockchain.transDetails(tx)">
       <ion-label>{{ tx }}</ion-label>

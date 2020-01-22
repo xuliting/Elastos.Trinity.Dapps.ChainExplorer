@@ -214,3 +214,19 @@ ion-spinner {
   }
 }
 
+.search-container {
+  display: flex;
+  justify-content: center;
+  padding: 12px 0 0;
+
+  ion-searchbar {
+    width: 90%;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.darkSearch {
+  background-color: #1b1e27;
+}
+

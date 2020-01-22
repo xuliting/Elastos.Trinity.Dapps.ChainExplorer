@@ -1,4 +1,9 @@
-ion-label {
-  font-weight: 500;
-  font-size: 12px;
+ion-list {
+  padding-top: 0;
+
+  ion-label {
+    font-weight: 500;
+    font-size: 11px !important;
+  }
 }
+

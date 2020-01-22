@@ -22,6 +22,17 @@
     </ion-item>
   </ion-list> -->
 
+  <div class="search-container" [class.darkSearch]="tableStyle === 'dark'">
+    <ion-searchbar
+      mode="ios"
+      color="light"
+      placeholder=" Search for Block"
+      [(ngModel)]="block"
+      (keyup.enter)="searchBlock()"
+    >
+    </ion-searchbar>
+  </div>
+
   <ion-list  *ngIf="blockchain.blocks.length > 0" no-padding no-margin>
     <ngx-datatable
       [rows]="blockchain.blocks"

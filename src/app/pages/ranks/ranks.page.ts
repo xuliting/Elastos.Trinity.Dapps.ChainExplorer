@@ -30,6 +30,12 @@ export class RanksPage implements OnInit {
     this.router.navigate(['/menu/rank/event.row.address'], props);
   }
 
+  // For fetching address details via api //
+  /* rankDetails(event) {
+    console.log(event.row);
+    this.blockchain.addressDetails(event.row.address)
+  } */
+
   //// Toggling bootstrap and dark theme ////
   switchMode() {
     if(this.tableStyle === 'bootstrap') {
