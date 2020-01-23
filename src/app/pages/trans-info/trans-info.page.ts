@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BlockchainService } from 'src/app/services/blockchain.service';
-import { Tx, Party } from 'src/app/models/tx.model';
+import { Tx } from 'src/app/models/tx.model';
 
 @Component({
   selector: 'app-trans-info',
@@ -11,8 +11,6 @@ import { Tx, Party } from 'src/app/models/tx.model';
 export class TransInfoPage implements OnInit {
 
   public tx: Tx;
-  // public party1: Party
-  // public party2: Party
 
   constructor(
     public blockchain: BlockchainService,

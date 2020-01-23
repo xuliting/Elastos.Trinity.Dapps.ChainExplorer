@@ -18,13 +18,3 @@ export class Tx {
     public size: number
   ) {}
 }
-
-export class Party {
-  constructor(
-    public outputpayload: string,
-    public outputtype: number,
-    public value: number,
-    public n: number,
-    public scriptPubKey: any,
-  ) {}
-}

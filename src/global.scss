@@ -91,6 +91,7 @@ ion-content {
   }
 }
 
+/** Header **/
 ion-header {
   ion-toolbar {
     .header-btns {
@@ -109,6 +110,7 @@ ion-header {
   }
 }
 
+/** Bottom tab-bar **/
 ion-tab-bar {
   height: 9%;
 
@@ -128,7 +130,7 @@ ion-spinner {
   color: black;
 }
 
-/*** Styling for Block Rows ***/
+/*** Datatable Rows ***/
 .highlight {
   color: #ffd31a;
 }
@@ -151,26 +153,10 @@ ion-spinner {
   background-color: rgb(10, 10, 10);
 }
 
-/** Styling for details **/
+/** Block/Tx/Address Details **/
 .container {
   min-height: 100%;
   background: #FAFAFA;
-
-  .block-header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    ion-img {
-      height: 60px;
-      width: 60px;
-    }
-
-    ion-label {
-      font-weight: 600;
-      font-size: 28px;
-    }
-  }
 
   .section {
     margin-left: 10px;
@@ -203,17 +189,37 @@ ion-spinner {
       color: #868f96;
     }
 
-    .overflow {
-      margin: 0 0 16px;
-    }
-
     ion-img {
       width: 20px;
       height: 20px;
     }
   }
+
+  .overflow {
+    border-bottom: 1px solid rgb(216, 216, 216);
+
+    ion-row {
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+
+      h4 {
+        font-size: 12px !important;
+        font-weight: 600;
+        margin: 16px 0;
+      }
+
+      p {
+        margin: 0 0 16px;
+        font-size: 12px !important;
+        font-weight: 600;
+        color: #868f96;
+      }
+    }
+  }
 }
 
+/** search **/
 .search-container {
   display: flex;
   justify-content: center;
@@ -228,5 +234,15 @@ ion-spinner {
 
 .darkSearch {
   background-color: #1b1e27;
+  padding: 12px 0 12px;
 }
 
+/** datatable theme **/
+.ngx-datatable.bootstrap {
+
+  .datatable-header {
+    .datatable-header-cell {
+      font-weight: bold;
+    }
+  }
+}

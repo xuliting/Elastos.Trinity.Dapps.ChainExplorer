@@ -1,0 +1,15 @@
+.address-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  ion-img {
+    height: 60px;
+    width: 60px;
+  }
+
+  ion-label {
+    font-weight: 600;
+    font-size: 16px;
+  }
+}

@@ -1,7 +1,7 @@
 <ion-header no-border>
   <ion-toolbar mode="ios">
     <ion-buttons slot="start" class="header-btns">
-      <ion-button [routerLink]="['/menu/blocks']">
+      <ion-button [routerLink]="['/menu/txs']">
         <ion-icon mode="ios" name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -20,7 +20,7 @@
       <ion-row>
         <ion-col class="tx-header">
           <ion-img src="../assets/images/tx.png"></ion-img> &nbsp;
-          <ion-label>{{ tx._id.slice(0,30) }}...</ion-label>
+          <ion-label>{{ tx._id.slice(0,33) }} <br> {{ tx._id.slice(33,66) }}</ion-label>
         </ion-col>
       </ion-row>
 
@@ -33,7 +33,7 @@
       </ion-row>
 
       <ion-row class="details">
-        <h4>Recieved Time</h4>
+        <h4>Received Time</h4>
         <p>{{ getDate(tx.time)}} </p>
       </ion-row>
 
@@ -57,10 +57,15 @@
         <p>{{ tx.blockheight }}</p>
       </ion-row>
 
-      <ion-row class="details">
-        <h4>Block Hash</h4>
-        <p class="overflow">{{ tx.blockhash }}</p>
-      </ion-row>
+      <div class="overflow" margin-horizontal>
+        <ion-row>
+          <h4>Block Hash</h4>
+          <p padding-top (click)="blockchain.blockDetails(tx.blockhash)">
+            {{ tx.blockhash.slice(0,33) }}...
+            &nbsp; <ion-icon mode="ios" name="arrow-forward"></ion-icon>
+          </p>
+        </ion-row>
+      </div>
 
       <ion-row padding-top>
         <ion-col size="12" class="section">
@@ -75,23 +80,26 @@
         </ion-row>
 
         <ion-row class="details">
-          <h4>Fees</h4>
-          <p>{{ tx.fees }}</p>
-        </ion-row>
-
-        <ion-row class="details">
-          <h4>Total Payout</h4>
-          <p>{{ tx.valueOut }}</p>
-        </ion-row>
-
-        <ion-row class="details">
           <div>
             <h4 *ngFor="let x of tx.vout">{{ x.value }}</h4>
           </div>
           <ion-img src="../assets/images/tx.png"></ion-img>
           <div>
-            <p *ngFor="let x of tx.vout">{{ x.scriptPubKey.addresses[0].slice(0,25) }}...</p>
+            <p *ngFor="let x of tx.vout" (click)="blockchain.addressDetails(x.scriptPubKey.addresses[0])">
+              {{ x.scriptPubKey.addresses[0].slice(0,18) }}...
+              &nbsp; <ion-icon mode="ios" name="arrow-forward"></ion-icon>
+            </p>
           </div>
+        </ion-row>
+
+        <ion-row class="details">
+          <h4>Total Payout</h4>
+          <p>{{ tx.valueOut }} ELA</p>
+        </ion-row>
+
+        <ion-row class="details">
+          <h4>Fees</h4>
+          <p>{{ tx.fees }} ELA</p>
         </ion-row>
       </div>
 
@@ -102,18 +110,11 @@
         </ion-row>
 
         <ion-row class="details">
-          <h4>Fees</h4>
-          <p>{{ tx.fees }}</p>
-        </ion-row>
-
-        <ion-row class="details">
-          <h4>Total Payout</h4>
-          <p>{{ tx.valueOut }}</p>
-        </ion-row>
-
-        <ion-row class="details">
           <h4>Sender</h4>
-          <p>{{ tx.vin[0].addr.slice(0,25) }}...</p>
+          <p (click)="blockchain.addressDetails(tx.vin[0].addr)">
+            {{ tx.vin[0].addr.slice(0,18) }}...
+            &nbsp; <ion-icon mode="ios" name="arrow-forward"></ion-icon>
+          </p>
         </ion-row>
 
         <ion-row class="details">
@@ -122,8 +123,21 @@
           </div>
           <ion-img src="../assets/images/tx.png"></ion-img>
           <div>
-            <p *ngFor="let x of tx.vout">{{ x.scriptPubKey.addresses[0].slice(0,25) }}...</p>
+            <p *ngFor="let x of tx.vout" (click)="blockchain.addressDetails(x.scriptPubKey.addresses[0])">
+              {{ x.scriptPubKey.addresses[0].slice(0,18) }}...
+              &nbsp; <ion-icon mode="ios" name="arrow-forward"></ion-icon>
+            </p>
           </div>
+        </ion-row>
+
+        <ion-row class="details">
+          <h4>Total Payout</h4>
+          <p>{{ tx.valueOut }} ELA</p>
+        </ion-row>
+
+        <ion-row class="details">
+          <h4>Fees</h4>
+          <p>{{ tx.fees }} ELA</p>
         </ion-row>
       </div>
 
@@ -134,18 +148,11 @@
         </ion-row>
 
         <ion-row class="details">
-          <h4>Fees</h4>
-          <p>{{ tx.fees }}</p>
-        </ion-row>
-
-        <ion-row class="details">
-          <h4>Total Payout</h4>
-          <p>{{ tx.valueOut }}</p>
-        </ion-row>
-
-        <ion-row class="details">
           <h4>Sender</h4>
-          <p>{{ tx.vin[0].addr.slice(0,25) }}...</p>
+          <p (click)="blockchain.addressDetails(tx.vin[0].addr)">
+            {{ tx.vin[0].addr.slice(0,18) }}...
+            &nbsp; <ion-icon mode="ios" name="arrow-forward"></ion-icon>
+          </p>
         </ion-row>
 
         <ion-row class="details">
@@ -154,8 +161,21 @@
           </div>
           <ion-img src="../assets/images/tx.png"></ion-img>
           <div>
-            <p *ngFor="let x of tx.vout">{{ x.scriptPubKey.addresses[0].slice(0,25) }}...</p>
+            <p *ngFor="let x of tx.vout" (click)="blockchain.addressDetails(x.scriptPubKey.addresses[0])">
+              {{ x.scriptPubKey.addresses[0].slice(0,18) }}...
+              &nbsp; <ion-icon mode="ios" name="arrow-forward"></ion-icon>
+            </p>
           </div>
+        </ion-row>
+
+        <ion-row class="details">
+          <h4>Total Payout</h4>
+          <p>{{ tx.valueOut }} ELA</p>
+        </ion-row>
+
+        <ion-row class="details">
+          <h4>Fees</h4>
+          <p>{{ tx.fees }} ELA</p>
         </ion-row>
       </div>
 

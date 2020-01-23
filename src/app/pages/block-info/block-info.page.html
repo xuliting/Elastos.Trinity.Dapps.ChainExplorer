@@ -77,20 +77,35 @@
       <p>{{ block.nonce }}</p>
     </ion-row>
 
-    <ion-row class="details">
-      <h4>Hash</h4>
-      <p class="overflow">{{ block.hash }}</p>
-    </ion-row>
+    <div class="overflow" margin-horizontal>
+      <ion-row>
+        <h4>Hash</h4>
+        <p padding-top>
+          {{ block.hash.slice(0,33) }} <br>
+          {{ block.hash.slice(33,66) }}
+        </p>
+      </ion-row>
+    </div>
 
-    <ion-row class="details">
-      <h4>Previous Block</h4>
-      <p class="overflow">{{ block.previousblockhash }}</p>
-    </ion-row>
+    <div class="overflow" margin-horizontal>
+      <ion-row>
+        <h4>Previous Block</h4>
+        <p padding-top>
+          {{ block.previousblockhash.slice(0,33) }} <br>
+          {{ block.previousblockhash.slice(33,66) }}
+        </p>
+      </ion-row>
+    </div>
 
-    <ion-row class="details">
-      <h4>Merkle Root</h4>
-      <p class="overflow">{{ block.merkleroot }}</p>
-    </ion-row>
+    <div class="overflow" margin-horizontal>
+      <ion-row>
+        <h4>Merkle Root</h4>
+        <p padding-top>
+          {{ block.merkleroot.slice(0,33) }} <br>
+          {{ block.merkleroot.slice(33,66 ) }}
+        </p>
+      </ion-row>
+    </div>
 
     <!-- Transactions -->
 
@@ -105,10 +120,16 @@
       <p>{{ block.txlength }}</p>
     </ion-row>
 
-    <ion-row class="details">
-      <h4>Transactions</h4>
-      <p class="overflow" *ngFor="let tx of block.tx" (click)="blockchain.transDetails(tx)">{{ tx }}</p>
-    </ion-row>
+    <div class="overflow" margin-horizontal>
+      <ion-row>
+        <h4>Transactions</h4>
+      </ion-row>
+
+      <ion-row *ngFor="let tx of block.tx" (click)="blockchain.transDetails(tx)">
+        <p>{{ tx.slice(0,33)}} <br> {{ tx.slice(33,66)}} <br> </p>
+        <p><ion-icon mode="ios" name="arrow-forward"></ion-icon></p>
+      </ion-row>
+    </div>
 
     <!-- Confirm Info -->
 
@@ -118,20 +139,39 @@
       </ion-col>
     </ion-row>
 
-    <ion-row class="details">
-      <h4>Sponsor</h4>
-      <p class="overflow">{{ block.confirmInfo.sponsor }}</p>
-    </ion-row>
+    <div class="overflow" margin-horizontal>
+      <ion-row>
+        <h4>Sponsor</h4>
+        <p padding-top>
+          {{ block.confirmInfo.sponsor.slice(0,33) }} <br>
+          {{ block.confirmInfo.sponsor.slice(33,66) }}
+        </p>
+      </ion-row>
+    </div>
 
     <ion-row class="details">
       <h4>Offset</h4>
       <p>{{ block.confirmInfo.viewoffset }}</p>
     </ion-row>
 
-    <ion-row class="details">
-      <h4>Votes List</h4>
-      <p class="overflow" *ngFor="let vote of block.confirmInfo.votes">{{ vote.signer }}</p>
-    </ion-row>
+    <div class="overflow" margin-horizontal>
+      <ion-row>
+        <h4>Votes List</h4>
+      </ion-row>
+
+      <!-- With index of vote -->
+       <ion-row *ngFor="let vote of block.confirmInfo.votes">
+        <h4>{{ block.confirmInfo.votes.indexOf(vote) + 1 }}</h4>
+        <p>
+          {{ vote.signer.slice(0,33)}} <br>
+          {{ vote.signer.slice(33,66)}}
+        </p>
+      </ion-row>
+
+     <!--  <ion-row>
+        <p *ngFor="let vote of block.confirmInfo.votes">{{ vote.signer.slice(0,33)}} <br> {{ vote.signer.slice(33,66)}}</p>
+      </ion-row> -->
+    </div>
 
   </ion-grid>
 </ion-content>

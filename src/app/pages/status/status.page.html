@@ -21,8 +21,8 @@
   </ion-list>
 </ion-content> -->
 
-<ion-content>
-  <ion-grid class="container" *ngIf="blockchain.blocks.length > 0">
+<ion-content *ngIf="blockchain.status && blockchain.blocks.length > 0">
+  <ion-grid class="container">
     <ion-row>
       <ion-col class="status-header">
         <ion-img src="../assets/images/elastos2.png"></ion-img> &nbsp;
@@ -44,27 +44,27 @@
 
     <ion-row class="details">
       <h4>Height</h4>
-      <p>{{ blockchain.blocks[0].height }}</p>
+      <p>{{ blockchain.status.blocks }}</p>
     </ion-row>
 
     <ion-row class="details">
       <h4>Version</h4>
-      <p>1</p>
+      <p>{{ blockchain.status.version }}</p>
     </ion-row>
 
     <ion-row class="details">
       <h4>Protocol Version</h4>
-      <p>1</p>
+      <p>{{ blockchain.status.protocolversion }}</p>
     </ion-row>
 
     <ion-row class="details">
       <h4>Time Offset</h4>
-      <p>0</p>
+      <p>{{ blockchain.status.timeoffset }}</p>
     </ion-row>
 
     <ion-row class="details">
       <h4>Node Connections</h4>
-      <p>1</p>
+      <p>{{ blockchain.status.connections }}</p>
     </ion-row>
 
     <ion-row class="details">
@@ -72,15 +72,56 @@
       <p>{{ blockchain.blocks[0].difficulty }}</p>
     </ion-row>
 
-    <ion-row class="details">
-      <h4>Last Block</h4>
-      <p class="overflow">{{ blockchain.blocks[0].hash }}</p>
-    </ion-row>
+    <div class="overflow" margin-horizontal>
+      <ion-row>
+        <h4>Last Block</h4>
+        <p padding-top>{{ blockchain.blocks[0].hash.slice(0,33)}} <br> {{ blockchain.blocks[0].hash.slice(33,66)}}</p>
+      </ion-row>
+    </div>
 
   </ion-grid>
+</ion-content>
 
-  <ion-grid class="container" *ngIf="blockchain.blocks.length === 0" text-center margin-top padding-top>
-    <ion-spinner name="bubbles"></ion-spinner>
+<ion-content *ngIf="blockchain.blocks.length === 0">
+  <ion-grid>
+    <ion-item lines="none" margin-vertical>
+      <ion-skeleton-text animated style="width: 100%; height: 100px"></ion-skeleton-text>
+    </ion-item>
+    <ion-item>
+      <ion-skeleton-text animated style="width: 100%; height: 30px"></ion-skeleton-text>
+    </ion-item>
+    <ion-item>
+      <ion-skeleton-text animated style="width: 100%; height: 30px"></ion-skeleton-text>
+    </ion-item>
+    <ion-item>
+      <ion-skeleton-text animated style="width: 100%; height: 30px"></ion-skeleton-text>
+    </ion-item>
+    <ion-item>
+      <ion-skeleton-text animated style="width: 100%; height: 30px"></ion-skeleton-text>
+    </ion-item>
+    <ion-item>
+      <ion-skeleton-text animated style="width: 100%; height: 30px"></ion-skeleton-text>
+    </ion-item>
+    <ion-item>
+      <ion-skeleton-text animated style="width: 100%; height: 30px"></ion-skeleton-text>
+    </ion-item>
+    <ion-item>
+      <ion-skeleton-text animated style="width: 100%; height: 30px"></ion-skeleton-text>
+    </ion-item>
+    <ion-item>
+      <ion-skeleton-text animated style="width: 100%; height: 30px"></ion-skeleton-text>
+    </ion-item>
+    <ion-item>
+      <ion-skeleton-text animated style="width: 100%; height: 30px"></ion-skeleton-text>
+    </ion-item>
+    <ion-item>
+      <ion-skeleton-text animated style="width: 100%; height: 30px"></ion-skeleton-text>
+    </ion-item>
+    <ion-item>
+      <ion-skeleton-text animated style="width: 100%; height: 30px"></ion-skeleton-text>
+    </ion-item>
+    <ion-item>
+      <ion-skeleton-text animated style="width: 100%; height: 30px"></ion-skeleton-text>
+    </ion-item>
   </ion-grid>
-
 </ion-content>

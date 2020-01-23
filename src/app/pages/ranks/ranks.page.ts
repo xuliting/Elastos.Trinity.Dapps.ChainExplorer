@@ -11,6 +11,7 @@ export class RanksPage implements OnInit {
 
   public tableStyle: string = 'bootstrap';
   public lightMode: boolean = true;
+  public address: string = "";
 
   constructor(
     public blockchain: BlockchainService,
@@ -20,6 +21,17 @@ export class RanksPage implements OnInit {
   ngOnInit() {
   }
 
+  searchAddress() {
+    if(!this.address) {
+      console.log('Input empty');
+      return;
+    } else {
+      console.log(this.address);
+      this.blockchain.addressDetails(this.address);
+    }
+  }
+
+  /*
   rankDetails(event) {
     console.log(event.row);
     let props: NavigationExtras = {
@@ -29,12 +41,13 @@ export class RanksPage implements OnInit {
     }
     this.router.navigate(['/menu/rank/event.row.address'], props);
   }
+  */
 
   // For fetching address details via api //
-  /* rankDetails(event) {
+  rankDetails(event) {
     console.log(event.row);
     this.blockchain.addressDetails(event.row.address)
-  } */
+  }
 
   //// Toggling bootstrap and dark theme ////
   switchMode() {

@@ -3,10 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { LoadingController, AlertController } from '@ionic/angular';
+import { Router, NavigationExtras } from '@angular/router';
 
 import { Block, FormattedBlock } from '../models/blocks.model';
-import { Rank } from '../models/ranks.model';
-import { Router, NavigationExtras } from '@angular/router';
+import { Rank, Address } from '../models/ranks.model';
+import { Status } from '../models/status.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ export class BlockchainService {
   public formattedBlocks: FormattedBlock[] = [];
   public ranks: Rank[] = [];
   public txs: string[] = [];
+  public status: Status;
 
   constructor(
     private http: HttpClient,
@@ -30,10 +32,11 @@ export class BlockchainService {
       this.fetchBlocks();
     }, 5000);
 
+    this.fetchStatus();
     this.fetchRanks();
   }
 
-  /******************************** Get Block/Tx/Address List ********************************/
+  /******************************** Get Block/Tx/Rank/Status  ********************************/
   fetchRanks() {
     console.log('Fetching Ranks..');
     this.http.get<any>('https://blockchain.elastos.org/api/v1/addrs/richest-list').subscribe((res: any) => {
@@ -57,6 +60,16 @@ export class BlockchainService {
       this.orgBlocks(this.blocks);
       this.getTx();
 
+    }, err => {
+      console.log(err);
+    });
+  }
+
+  fetchStatus() {
+    console.log('Fetching Status..');
+    this.http.get<any>('https://blockchain.elastos.org/api/v1/status/?q=getInfo').subscribe((res: any) => {
+      console.log('Chain status fetched', res);
+      this.status = res.info;
     }, err => {
       console.log(err);
     });
@@ -134,7 +147,7 @@ export class BlockchainService {
     console.log('Fetching address', address);
     this.loading('address', address);
 
-    this.http.get<any>('https://blockchain.elastos.org/api/v1/txs/?address=' + address + '&pageNum=0').subscribe((res: any) => {
+    this.http.get<any>('https://blockchain.elastos.org/api/v1/addr/' + address + '/?noTxList=1').subscribe((res: any) => {
       console.log('Address fetched', res);
       this.loadingCtrl.dismiss();
 
@@ -151,6 +164,51 @@ export class BlockchainService {
       this.loadingErr('address', address);
     });
   }
+
+  /** TO DO **/
+  /* async getAddressDetails(address: string) {
+    this.loading('address', address);
+    let addressInfo = await this.addressDetails(address);
+    let addressTxInfo = await this.addressTxDetails(address);
+
+    let props: NavigationExtras = {
+      queryParams: {
+        addressInfo: JSON.stringify(addressInfo),
+        addressTxInfo: JSON.stringify(addressTxInfo)
+      }
+    }
+    this.router.navigate(['/menu/rank/', address], props);
+    this.loadingCtrl.dismiss();
+  }
+
+  addressDetails(address: string): Promise<Address> {
+    console.log('Fetching address details', address);
+    return new Promise((resolve, reject) => {
+      this.http.get<any>('https://blockchain.elastos.org/api/v1/addr/' + address + '/?noTxList=1').subscribe((res: Address) => {
+        console.log('Address details fetched', res);
+        resolve(res);
+      }, err => {
+        console.log(err.message);
+        this.loadingCtrl.dismiss();
+        this.loadingErr('address', address);
+      });
+    })
+  }
+
+  addressTxDetails(address: string): Promise<any> {
+    console.log('Fetching address tx details', address);
+
+    return new Promise((resolve, reject) => {
+      this.http.get<any>('https://blockchain.elastos.org/api/v1/txs/?address=' + address + '&pageNum=0').subscribe((res: any) => {
+        console.log('Address tx details fetched', res);
+        resolve(res.info);
+      }, err => {
+        console.log(err.message);
+        this.loadingCtrl.dismiss();
+        this.loadingErr('address', address);
+      });
+    })
+  } */
 
   /******************************** Controllers ********************************/
   async loading(type: string, value: string,) {
@@ -184,4 +242,5 @@ export class BlockchainService {
 // Block Details Ex:
 // https://blockchain.elastos.org/api/v1/block/136914236db07a6b21a99b207f8d1e45568de5a4d83823680eb2836f27069627/
 
-
+// Address Tx Details Ex:
+// https://blockchain.elastos.org/api/v1/txs/?address=Ed57c3wF3J1u8vEYE9cjGUpqGPkEJC69v8&pageNum=0
