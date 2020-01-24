@@ -1,7 +1,7 @@
 <ion-header no-border>
   <ion-toolbar mode="ios">
     <ion-buttons slot="start" class="header-btns">
-      <ion-button [routerLink]="['/menu/blocks']">
+      <ion-button (click)="goBack()">
         <ion-icon mode="ios" name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -15,7 +15,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid class="container" padding-top>
+  <ion-grid class="container" [class.darkContainer]="blockchain.tableStyle === 'dark'" padding-top>
 
     <ion-row>
       <ion-col class="block-header">

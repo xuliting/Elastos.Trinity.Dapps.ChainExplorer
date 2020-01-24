@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
+
 import { BlockchainService } from 'src/app/services/blockchain.service';
 import { Rank, Address } from 'src/app/models/ranks.model';
+import { Tx } from 'src/app/models/tx.model';
 
 @Component({
   selector: 'app-rank-info',
@@ -12,12 +15,13 @@ export class RankInfoPage implements OnInit {
 
   public rank: Rank;
   public address: Address;
-  public txs: any;
+  public txs: Tx[];
 
   constructor(
     public blockchain: BlockchainService,
     private route: ActivatedRoute,
     private router: Router,
+    private navCtrl: NavController
   ) { }
 
   ngOnInit() {
@@ -25,10 +29,6 @@ export class RankInfoPage implements OnInit {
       if (params && params.rank) {
         this.rank = JSON.parse(params.rank);
         console.log('Rank details', this.rank);
-      }
-      if (params && params.address) {
-        this.address = JSON.parse(params.address);
-        console.log('Address details', this.address);
       }
       if (params && params.addressInfo && params.addressTxInfo) {
         this.address = JSON.parse(params.addressInfo);
@@ -49,4 +49,7 @@ export class RankInfoPage implements OnInit {
     });
   } */
 
+  goBack() {
+    this.navCtrl.back();
+  }
 }

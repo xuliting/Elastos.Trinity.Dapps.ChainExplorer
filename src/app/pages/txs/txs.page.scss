@@ -1,9 +1,30 @@
-.list {
-  padding-top: 0;
+ion-row {
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  border-bottom: 1px solid rgb(216, 216, 216);
 
-  ion-label {
-    font-weight: 500;
+  p {
+    margin: 16px 0;
     font-size: 11px !important;
+    font-weight: 600;
   }
 }
 
+.darken {
+  background: #181b24;
+
+  ion-row {
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    border-bottom: 1px solid rgb(216, 216, 216);
+
+    p {
+      margin: 16px 0;
+      font-size: 11px !important;
+      font-weight: 600;
+      color: white;
+    }
+  }
+}

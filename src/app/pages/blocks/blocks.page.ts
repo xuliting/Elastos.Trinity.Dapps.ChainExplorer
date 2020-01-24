@@ -9,8 +9,7 @@ import { Router, NavigationExtras } from '@angular/router';
 })
 export class BlocksPage implements OnInit {
 
-  public tableStyle: string = 'bootstrap';
-  public lightMode: boolean = true;
+  public tableStyle: string = '';
   public block: string = "";
 
   constructor(
@@ -19,6 +18,7 @@ export class BlocksPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.tableStyle = this.blockchain.tableStyle;
   }
 
   searchBlock() {
@@ -43,15 +43,17 @@ export class BlocksPage implements OnInit {
 
   //// Toggling bootstrap and dark theme ////
   switchMode() {
-    if(this.tableStyle === 'bootstrap') {
+    if(this.blockchain.tableStyle === 'bootstrap') {
+      this.blockchain.tableStyle = 'dark';
       this.tableStyle = 'dark';
     } else {
+      this.blockchain.tableStyle = 'bootstrap';
       this.tableStyle = 'bootstrap';
     }
   }
 
   getRowClass(row) {
-    if(this.blockchain.blocks.indexOf(row) % 2 === 0) {
+    if(this.tableStyle === 'dark' && this.blockchain.blocks.indexOf(row) % 2 === 0) {
       return 'isEven';
     }
   }

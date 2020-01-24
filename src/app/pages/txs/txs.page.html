@@ -1,5 +1,10 @@
 <ion-header no-border>
   <ion-toolbar mode="ios">
+    <ion-buttons slot="start" class="header-btns">
+      <ion-button (click)="switchMode()" [class.highlight]="blockchain.tableStyle === 'bootstrap'">
+        <ion-icon name="sunny" mode="ios"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>Latest Txs</ion-title>
     <ion-buttons slot="end" class="header-btns">
       <ion-menu-toggle>
@@ -10,20 +15,24 @@
 </ion-header>
 
 <ion-content *ngIf="blockchain.txs.length > 0">
-  <div class="search-container">
-    <ion-searchbar
-      mode="ios"
-      placeholder=" Search for Transaction"
-      [(ngModel)]="tx"
-      (keyup.enter)="searchTx()"
-    >
-    </ion-searchbar>
-  </div>
-  <ion-list padding class="list">
-    <ion-item *ngFor="let tx of blockchain.txs" detail (click)="blockchain.transDetails(tx)">
-      <ion-label>{{ tx }}</ion-label>
-    </ion-item>
-  </ion-list>
+  <ion-grid [class.darken]="blockchain.tableStyle === 'dark'">
+    <div class="search-container">
+      <ion-searchbar
+        mode="ios"
+        color="light"
+        placeholder=" Search for Transaction"
+        [(ngModel)]="tx"
+        (keyup.enter)="searchTx()"
+      >
+      </ion-searchbar>
+    </div>
+
+    <ion-row *ngFor="let tx of blockchain.txs" (click)="blockchain.transDetails(tx)" margin-horizontal>
+      <p>{{ tx.slice(0,33)}} <br> {{ tx.slice(33,66)}} <br> </p>
+      <p><ion-icon mode="ios" name="arrow-forward"></ion-icon></p>
+    </ion-row>
+
+  </ion-grid>
 </ion-content>
 
 <ion-content *ngIf="blockchain.txs.length === 0">

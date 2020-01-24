@@ -8,6 +8,7 @@ import { Router, NavigationExtras } from '@angular/router';
 import { Block, FormattedBlock } from '../models/blocks.model';
 import { Rank, Address } from '../models/ranks.model';
 import { Status } from '../models/status.model';
+import { Tx } from '../models/tx.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,9 @@ export class BlockchainService {
   public ranks: Rank[] = [];
   public txs: string[] = [];
   public status: Status;
+  public totalTx: number = null;
+
+  public tableStyle: string = 'bootstrap';
 
   constructor(
     private http: HttpClient,
@@ -30,8 +34,9 @@ export class BlockchainService {
   init() {
     setInterval(() => {
       this.fetchBlocks();
-    }, 5000);
+    }, 10000);
 
+    this.fetchBlocks();
     this.fetchStatus();
     this.fetchRanks();
   }
@@ -53,6 +58,7 @@ export class BlockchainService {
     console.log('Fetching Blocks..');
     this.http.get<any>('https://blockchain.elastos.org/api/v1/blocks?limit=20').subscribe((res: any) => {
       console.log('Blocks fetched', res);
+      this.totalTx = res.number_of_transactions;
       this.blocks = this.blocks.concat(res.blocks);
       this.blocks.forEach(block => {
         block.date = new Date(block.time * 1000).toLocaleTimeString();
@@ -104,7 +110,7 @@ export class BlockchainService {
     this.loading('block', block);
 
     this.http.get<any>('https://blockchain.elastos.org/api/v1/block/' + block).subscribe((res: any) => {
-      console.log('Tx fetched', res);
+      console.log('Block fetched', res);
       this.loadingCtrl.dismiss();
 
       let props: NavigationExtras = {
@@ -143,33 +149,11 @@ export class BlockchainService {
     });
   }
 
-  addressDetails(address: string) {
-    console.log('Fetching address', address);
+  async getAddressDetails(address: string) {
     this.loading('address', address);
 
-    this.http.get<any>('https://blockchain.elastos.org/api/v1/addr/' + address + '/?noTxList=1').subscribe((res: any) => {
-      console.log('Address fetched', res);
-      this.loadingCtrl.dismiss();
-
-      let props: NavigationExtras = {
-        queryParams: {
-          address: JSON.stringify(res)
-        }
-      }
-      this.router.navigate(['/menu/rank/', address], props);
-
-    }, err => {
-      console.log(err.message);
-      this.loadingCtrl.dismiss();
-      this.loadingErr('address', address);
-    });
-  }
-
-  /** TO DO **/
-  /* async getAddressDetails(address: string) {
-    this.loading('address', address);
-    let addressInfo = await this.addressDetails(address);
-    let addressTxInfo = await this.addressTxDetails(address);
+    let addressInfo: Address = await this.addressDetails(address);
+    let addressTxInfo: Tx[] = await this.addressTxDetails(address);
 
     let props: NavigationExtras = {
       queryParams: {
@@ -177,8 +161,9 @@ export class BlockchainService {
         addressTxInfo: JSON.stringify(addressTxInfo)
       }
     }
-    this.router.navigate(['/menu/rank/', address], props);
-    this.loadingCtrl.dismiss();
+    this.router.navigate(['/menu/rank/', address], props).then(() => {
+      this.loadingCtrl.dismiss();
+    });
   }
 
   addressDetails(address: string): Promise<Address> {
@@ -195,20 +180,20 @@ export class BlockchainService {
     })
   }
 
-  addressTxDetails(address: string): Promise<any> {
+  addressTxDetails(address: string): Promise<Tx[]> {
     console.log('Fetching address tx details', address);
 
     return new Promise((resolve, reject) => {
       this.http.get<any>('https://blockchain.elastos.org/api/v1/txs/?address=' + address + '&pageNum=0').subscribe((res: any) => {
         console.log('Address tx details fetched', res);
-        resolve(res.info);
+        resolve(res.txs);
       }, err => {
         console.log(err.message);
         this.loadingCtrl.dismiss();
         this.loadingErr('address', address);
       });
     })
-  } */
+  }
 
   /******************************** Controllers ********************************/
   async loading(type: string, value: string,) {
@@ -217,6 +202,7 @@ export class BlockchainService {
       spinner: 'bubbles',
       message: 'Loading ' + type.charAt(0).toUpperCase() + type.slice(1) + '...',
       translucent: true,
+      backdropDismiss: true
     });
     return await loading.present();
   }
@@ -225,7 +211,7 @@ export class BlockchainService {
     const alert = await this.alertCtrl.create({
       mode: 'ios',
       header: type.charAt(0).toUpperCase() + type.slice(1) + ' Fetch Failed',
-      message: 'There was en error fetching ' + type,
+      message: 'Is this a correct ' + type + '?',
       buttons: ['OK']
     });
     await alert.present();

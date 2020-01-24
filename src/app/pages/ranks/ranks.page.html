@@ -15,11 +15,6 @@
 </ion-header>
 
 <ion-content *ngIf="blockchain.ranks.length > 0">
-  <!-- <ion-list *ngIf="blockchain.ranks.length > 0" padding>
-    <ion-item *ngFor="let rank of blockchain.ranks" detail>
-      <ion-label>{{ rank.address }}</ion-label>
-    </ion-item>
-  </ion-list> -->
 
   <div class="search-container" [class.darkSearch]="tableStyle === 'dark'">
     <ion-searchbar
@@ -56,6 +51,7 @@
       <!-- <ngx-datatable-column name="Amount" prop="txlength"></ngx-datatable-column> -->
     </ngx-datatable>
   </ion-list>
+
 </ion-content>
 
 <ion-content *ngIf="blockchain.ranks.length === 0">

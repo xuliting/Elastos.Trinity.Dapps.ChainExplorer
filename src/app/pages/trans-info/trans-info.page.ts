@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
+
 import { BlockchainService } from 'src/app/services/blockchain.service';
 import { Tx } from 'src/app/models/tx.model';
 
@@ -16,6 +18,7 @@ export class TransInfoPage implements OnInit {
     public blockchain: BlockchainService,
     private route: ActivatedRoute,
     private router: Router,
+    private navCtrl: NavController
   ) { }
 
   ngOnInit() {
@@ -29,5 +32,9 @@ export class TransInfoPage implements OnInit {
 
   getDate(timestamp: number) {
     return new Date(timestamp * 1000).toLocaleTimeString();
+  }
+
+  goBack() {
+    this.navCtrl.back();
   }
 }

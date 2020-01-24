@@ -1,7 +1,7 @@
 <ion-header no-border>
   <ion-toolbar mode="ios">
     <ion-buttons slot="start" class="header-btns">
-      <ion-button (click)="switchMode()" [class.highlight]="tableStyle === 'bootstrap'">
+      <ion-button (click)="switchMode()" [class.highlight]="blockchain.tableStyle === 'bootstrap'">
         <ion-icon name="sunny" mode="ios"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -16,45 +16,41 @@
 
 <ion-content *ngIf="blockchain.blocks.length > 0">
 
-  <!-- <ion-list *ngIf="blockchain.blocks.length > 0">
-    <ion-item *ngFor="let block of blockchain.blocks">
-      <ion-label>{{ block.merkleroot }}</ion-label>
-    </ion-item>
-  </ion-list> -->
+  <ion-grid [class.darkContainer]="blockchain.tableStyle === 'dark'" no-padding no-margin>
+    <div class="search-container" [class.darkSearch]="tableStyle === 'dark'">
+      <ion-searchbar
+        mode="ios"
+        color="light"
+        placeholder=" Search for Block"
+        [(ngModel)]="block"
+        (keyup.enter)="searchBlock()"
+      >
+      </ion-searchbar>
+    </div>
 
-  <div class="search-container" [class.darkSearch]="tableStyle === 'dark'">
-    <ion-searchbar
-      mode="ios"
-      color="light"
-      placeholder=" Search for Block"
-      [(ngModel)]="block"
-      (keyup.enter)="searchBlock()"
-    >
-    </ion-searchbar>
-  </div>
-
-  <ion-list no-padding no-margin>
-    <ngx-datatable
-      [rows]="blockchain.blocks"
-      [ngClass]="tableStyle"
-      [rowHeight]="'auto'"
-      [headerHeight]="40"
-      [rowClass]="getRowClass.bind(this)"
-      (activate)="blockDetails($event)"
-    >
-      <ngx-datatable-column name="Height" prop="height" maxWidth="100"></ngx-datatable-column>
-      <ngx-datatable-column name="Producer" prop="poolInfo.poolName" maxWidth="200"></ngx-datatable-column>
-      <ngx-datatable-column name="Time" prop="date" maxWidth="110"></ngx-datatable-column>
-      <ngx-datatable-column>
-        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-          <a>
-            <ion-icon name="arrow-forward" mode="ios"></ion-icon>
-          </a>
-        </ng-template>
-      </ngx-datatable-column>
-      <!-- <ngx-datatable-column name="Amount" prop="txlength"></ngx-datatable-column> -->
-    </ngx-datatable>
-  </ion-list>
+    <ion-list no-padding no-margin>
+      <ngx-datatable
+        [rows]="blockchain.blocks"
+        [ngClass]="tableStyle"
+        [rowHeight]="'auto'"
+        [headerHeight]="40"
+        [rowClass]="getRowClass.bind(this)"
+        (activate)="blockDetails($event)"
+      >
+        <ngx-datatable-column name="Height" prop="height" maxWidth="100"></ngx-datatable-column>
+        <ngx-datatable-column name="Producer" prop="poolInfo.poolName" maxWidth="200"></ngx-datatable-column>
+        <ngx-datatable-column name="Time" prop="date" maxWidth="110"></ngx-datatable-column>
+        <ngx-datatable-column>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <a>
+              <ion-icon name="arrow-forward" mode="ios"></ion-icon>
+            </a>
+          </ng-template>
+        </ngx-datatable-column>
+        <!-- <ngx-datatable-column name="Amount" prop="txlength"></ngx-datatable-column> -->
+      </ngx-datatable>
+    </ion-list>
+  </ion-grid>
 </ion-content>
 
 <ion-content *ngIf="blockchain.blocks.length === 0">

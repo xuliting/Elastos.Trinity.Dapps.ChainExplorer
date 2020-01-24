@@ -1,11 +1,11 @@
 <ion-header no-border>
   <ion-toolbar mode="ios">
     <ion-buttons slot="start" class="header-btns">
-      <ion-button [routerLink]="['/menu/ranks']">
+      <ion-button (click)="goBack()">
         <ion-icon mode="ios" name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Rank Details</ion-title>
+    <ion-title>Address Details</ion-title>
     <ion-buttons slot="end" class="header-btns">
       <ion-menu-toggle>
         <ion-icon src="../assets/icon/menu.svg"></ion-icon>
@@ -15,11 +15,11 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid class="container" padding-top>
+  <ion-grid class="container" [class.darkContainer]="blockchain.tableStyle === 'dark'" padding-top>
 
     <ion-row>
       <ion-col class="address-header">
-        <ion-img src="../assets/images/address.png"></ion-img> &nbsp;
+        <div><ion-icon name="pin" mode="ios"></ion-icon></div> &nbsp;
         <ion-label>{{ address.addrStr.slice(0,18) }} <br> {{ address.addrStr.slice(18,36) }}</ion-label>
       </ion-col>
     </ion-row>
@@ -49,6 +49,17 @@
       <h4>No. of Transactions</h4>
       <p>{{ address.txApperances }}</p>
     </ion-row>
+
+    <div class="overflow" margin-horizontal>
+      <ion-row>
+        <h4>Latest Transactions</h4>
+      </ion-row>
+
+      <ion-row *ngFor="let tx of txs" (click)="blockchain.transDetails(tx.txid)">
+        <p>{{ tx.txid.slice(0,33)}} <br> {{ tx.txid.slice(33,66)}} <br> </p>
+        <p><ion-icon mode="ios" name="arrow-forward"></ion-icon></p>
+      </ion-row>
+    </div>
 
   </ion-grid>
 </ion-content>

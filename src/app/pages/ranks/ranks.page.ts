@@ -9,8 +9,7 @@ import { Router, NavigationExtras } from '@angular/router';
 })
 export class RanksPage implements OnInit {
 
-  public tableStyle: string = 'bootstrap';
-  public lightMode: boolean = true;
+  public tableStyle: string = '';
   public address: string = "";
 
   constructor(
@@ -19,6 +18,7 @@ export class RanksPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.tableStyle = this.blockchain.tableStyle;
   }
 
   searchAddress() {
@@ -27,7 +27,7 @@ export class RanksPage implements OnInit {
       return;
     } else {
       console.log(this.address);
-      this.blockchain.addressDetails(this.address);
+      this.blockchain.getAddressDetails(this.address);
     }
   }
 
@@ -46,20 +46,22 @@ export class RanksPage implements OnInit {
   // For fetching address details via api //
   rankDetails(event) {
     console.log(event.row);
-    this.blockchain.addressDetails(event.row.address)
+    this.blockchain.getAddressDetails(event.row.address)
   }
 
-  //// Toggling bootstrap and dark theme ////
-  switchMode() {
-    if(this.tableStyle === 'bootstrap') {
+   //// Toggling bootstrap and dark theme ////
+   switchMode() {
+    if(this.blockchain.tableStyle === 'bootstrap') {
+      this.blockchain.tableStyle = 'dark';
       this.tableStyle = 'dark';
     } else {
+      this.blockchain.tableStyle = 'bootstrap';
       this.tableStyle = 'bootstrap';
     }
   }
 
   getRowClass(row) {
-    if(this.blockchain.ranks.indexOf(row) % 2 === 0) {
+    if(this.tableStyle === 'dark' && this.blockchain.ranks.indexOf(row) % 2 === 0) {
       return 'isEven';
     }
   }

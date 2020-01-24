@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BlockchainService } from 'src/app/services/blockchain.service';
 
 declare let appManager: any;
 
@@ -9,7 +10,7 @@ declare let appManager: any;
 })
 export class MenuPage implements OnInit {
 
-  constructor() { }
+  constructor(public blockchain: BlockchainService) { }
 
   ngOnInit() {
   }

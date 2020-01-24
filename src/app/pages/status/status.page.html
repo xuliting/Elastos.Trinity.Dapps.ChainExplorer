@@ -1,5 +1,10 @@
 <ion-header no-border>
   <ion-toolbar mode="ios">
+    <ion-buttons slot="start" class="header-btns">
+      <ion-button (click)="switchMode()" [class.highlight]="blockchain.tableStyle === 'bootstrap'">
+        <ion-icon name="sunny" mode="ios"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>Chain Status</ion-title>
     <ion-buttons slot="end" class="header-btns">
       <ion-menu-toggle>
@@ -9,20 +14,8 @@
   </ion-toolbar>
 </ion-header>
 
-<!-- <ion-content>
-  <ion-list  *ngIf="blockchain.blocks.length > 0">
-    <ion-item>
-      <ion-label>Current Height: {{ blockchain.blocks[0].height }}</ion-label>
-    </ion-item>
-  </ion-list>
-
-  <ion-list *ngIf="blockchain.blocks.length === 0" text-center margin-top padding-top>
-    <ion-spinner name="bubbles"></ion-spinner>
-  </ion-list>
-</ion-content> -->
-
 <ion-content *ngIf="blockchain.status && blockchain.blocks.length > 0">
-  <ion-grid class="container">
+  <ion-grid class="container" [class.darkContainer]="blockchain.tableStyle === 'dark'">
     <ion-row>
       <ion-col class="status-header">
         <ion-img src="../assets/images/elastos2.png"></ion-img> &nbsp;
@@ -45,6 +38,11 @@
     <ion-row class="details">
       <h4>Height</h4>
       <p>{{ blockchain.status.blocks }}</p>
+    </ion-row>
+
+    <ion-row class="details">
+      <h4>Total Transactions</h4>
+      <p>{{ blockchain.totalTx }}</p>
     </ion-row>
 
     <ion-row class="details">
