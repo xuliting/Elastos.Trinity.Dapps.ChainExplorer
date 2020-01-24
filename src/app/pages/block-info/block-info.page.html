@@ -161,7 +161,7 @@
 
       <!-- With index of vote -->
        <ion-row *ngFor="let vote of block.confirmInfo.votes">
-        <h4>{{ block.confirmInfo.votes.indexOf(vote) + 1 }}</h4>
+        <h5>{{ block.confirmInfo.votes.indexOf(vote) + 1 }}</h5>
         <p>
           {{ vote.signer.slice(0,33)}} <br>
           {{ vote.signer.slice(33,66)}}
