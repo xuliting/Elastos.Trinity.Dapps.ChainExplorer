@@ -105,7 +105,7 @@ ion-header {
 
     ion-title {
       font-size: 23px;
-      font-weight: 700;
+      font-weight: 900;
     }
   }
 }
@@ -121,7 +121,7 @@ ion-tab-bar {
 
   ion-label {
     font-size: 9px;
-    font-weight: bold;
+    font-weight: 700;
     color: #989aa2;
   }
 }
@@ -176,15 +176,16 @@ ion-spinner {
     margin-left: 15px;
     margin-right: 15px;
 
-    h4 {
+    h4, p {
       font-size: 12px !important;
       font-weight: 600;
+    }
+
+    h4 {
       margin: 16px 0;
     }
 
     p {
-      font-size: 12px !important;
-      font-weight: 600;
       margin: 16px;
       color: #868f96;
     }
@@ -203,22 +204,21 @@ ion-spinner {
       align-items: center;
       flex-wrap: wrap;
 
-      h4 {
+      h4, h5, p {
         font-size: 12px !important;
         font-weight: 600;
+      }
+
+      h4 {
         margin: 16px 0;
       }
 
       h5 {
         margin: 0 0 16px;
-        font-size: 12px !important;
-        font-weight: 600;
       }
 
       p {
         margin: 0 0 16px;
-        font-size: 12px !important;
-        font-weight: 600;
         color: #868f96;
       }
     }
@@ -244,19 +244,20 @@ ion-spinner {
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    border-bottom: 1px solid rgb(216, 216, 216);
+    border-bottom: 1px solid #d1d4d7;
     margin-left: 15px;
     margin-right: 15px;
 
-    h4 {
+    h4, p {
       font-size: 12px !important;
       font-weight: 600;
+    }
+
+    h4 {
       margin: 16px 0;
     }
 
     p {
-      font-size: 12px !important;
-      font-weight: 600;
       margin: 16px;
       color: #fafafa;
     }
@@ -265,26 +266,32 @@ ion-spinner {
       width: 20px;
       height: 20px;
     }
+
+    .end {
+      display: flex;
+      justify-content: flex-end;
+    }
   }
 
   .overflow {
-    border-bottom: 1px solid rgb(216, 216, 216);
+    border-bottom: 1px solid #d1d4d7;
 
     ion-row {
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
 
-      h4 {
+      h4, p {
         font-size: 12px !important;
         font-weight: 600;
+      }
+
+      h4 {
         margin: 16px 0;
       }
 
       p {
         margin: 0 0 16px;
-        font-size: 12px !important;
-        font-weight: 600;
         color: #fafafa;
       }
     }
@@ -331,6 +338,7 @@ ion-spinner {
     .datatable-body-row {
       vertical-align: top;
       border-top: 1px solid #d1d4d7;
+      font-weight: 500;
       &.datatable-row-even {
         background-color: #fafafa;
       }
@@ -439,27 +447,12 @@ ion-spinner {
 
     .datatable-body-row {
       // border-top: 1px solid #2f3646;
+      font-weight: 500;
 
       .datatable-body-cell {
         text-align: left;
         padding: 0.5rem 1.2rem;
         vertical-align: top;
-      }
-
-      &:hover {
-        background: #171b24;
-        transition-property: background;
-        transition-duration: 0.3s;
-        transition-timing-function: linear;
-      }
-
-      &:focus {
-        background-color: #232837;
-      }
-
-      &.active {
-        background-color: #1483ff;
-        color: #fff;
       }
     }
   }

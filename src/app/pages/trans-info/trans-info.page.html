@@ -21,7 +21,7 @@
         <ion-col class="tx-header">
           <ion-img *ngIf="blockchain.tableStyle === 'bootstrap'" src="../assets/images/tx.png"></ion-img> &nbsp;
           <div *ngIf="blockchain.tableStyle === 'dark'"><ion-icon name="send"></ion-icon></div> &nbsp;
-          <ion-label>{{ tx._id.slice(0,33) }} <br> {{ tx._id.slice(33,66) }}</ion-label>
+          <ion-label>{{ tx._id.slice(0,22) }} <br> {{ tx._id.slice(22,44) }} <br> {{ tx._id.slice(44,66) }}</ion-label>
         </ion-col>
       </ion-row>
 
@@ -62,7 +62,7 @@
         <ion-row>
           <h4>Block Hash</h4>
           <p padding-top (click)="blockchain.blockDetails(tx.blockhash)">
-            {{ tx.blockhash.slice(0,33) }}...
+            {{ tx.blockhash.slice(0,18) }}...
             &nbsp; <ion-icon mode="ios" name="arrow-forward"></ion-icon>
           </p>
         </ion-row>

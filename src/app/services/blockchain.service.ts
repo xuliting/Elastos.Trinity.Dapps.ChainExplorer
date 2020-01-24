@@ -23,6 +23,7 @@ export class BlockchainService {
   public totalTx: number = null;
 
   public tableStyle: string = 'bootstrap';
+  private httpRequest: any;
 
   constructor(
     private http: HttpClient,
@@ -109,7 +110,7 @@ export class BlockchainService {
     console.log('Fetching block', block);
     this.loading('block', block);
 
-    this.http.get<any>('https://blockchain.elastos.org/api/v1/block/' + block).subscribe((res: any) => {
+    this.httpRequest = this.http.get<any>('https://blockchain.elastos.org/api/v1/block/' + block).subscribe((res: any) => {
       console.log('Block fetched', res);
       this.loadingCtrl.dismiss();
 
@@ -131,7 +132,7 @@ export class BlockchainService {
     console.log('Fetching tx', transaction);
     this.loading('transaction', transaction);
 
-    this.http.get<any>('https://blockchain.elastos.org/api/v1/tx/' + transaction).subscribe((res: any) => {
+    this.httpRequest = this.http.get<any>('https://blockchain.elastos.org/api/v1/tx/' + transaction).subscribe((res: any) => {
       console.log('Tx fetched', res);
       this.loadingCtrl.dismiss();
 
@@ -169,7 +170,7 @@ export class BlockchainService {
   addressDetails(address: string): Promise<Address> {
     console.log('Fetching address details', address);
     return new Promise((resolve, reject) => {
-      this.http.get<any>('https://blockchain.elastos.org/api/v1/addr/' + address + '/?noTxList=1').subscribe((res: Address) => {
+      this.httpRequest = this.http.get<any>('https://blockchain.elastos.org/api/v1/addr/' + address + '/?noTxList=1').subscribe((res: Address) => {
         console.log('Address details fetched', res);
         resolve(res);
       }, err => {
@@ -184,7 +185,7 @@ export class BlockchainService {
     console.log('Fetching address tx details', address);
 
     return new Promise((resolve, reject) => {
-      this.http.get<any>('https://blockchain.elastos.org/api/v1/txs/?address=' + address + '&pageNum=0').subscribe((res: any) => {
+      this.httpRequest = this.http.get<any>('https://blockchain.elastos.org/api/v1/txs/?address=' + address + '&pageNum=0').subscribe((res: any) => {
         console.log('Address tx details fetched', res);
         resolve(res.txs);
       }, err => {
@@ -204,6 +205,12 @@ export class BlockchainService {
       translucent: true,
       backdropDismiss: true
     });
+
+    loading.onDidDismiss().then(() => {
+      console.log('Cancelling request', type + ':' + value);
+      this.httpRequest.unsubscribe();
+    })
+
     return await loading.present();
   }
 

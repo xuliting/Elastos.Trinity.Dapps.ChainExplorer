@@ -39,6 +39,10 @@ export class RankInfoPage implements OnInit {
     });
   }
 
+  ionViewDidEnter() {
+    this.blockchain.loadingCtrl.dismiss();
+  }
+
   // For fetching rank details via api //
   /* ngOnInit() {
     this.route.queryParams.subscribe(params => {
