@@ -15,6 +15,15 @@
 </ion-header>
 
 <ion-content *ngIf="blockchain.txs.length > 0">
+  <ion-refresher slot="fixed" (ionRefresh)="updateBlocks($event)">
+    <ion-refresher-content
+      [class.darkRefresh]="blockchain.tableStyle === 'dark'"
+      [class.lightRefresh]="blockchain.tableStyle === 'bootstrap'"
+      pullingIcon="arrow-round-up"
+      pullingText="Update Transactions"
+    >
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-grid [class.darken]="blockchain.tableStyle === 'dark'">
     <div class="search-container">
       <ion-searchbar
@@ -26,12 +35,10 @@
       >
       </ion-searchbar>
     </div>
-
     <ion-row *ngFor="let tx of blockchain.txs" (click)="blockchain.transDetails(tx)" margin-horizontal>
       <p>{{ tx.slice(0,33)}} <br> {{ tx.slice(33,66)}} <br> </p>
       <p><ion-icon mode="ios" name="arrow-forward"></ion-icon></p>
     </ion-row>
-
   </ion-grid>
 </ion-content>
 

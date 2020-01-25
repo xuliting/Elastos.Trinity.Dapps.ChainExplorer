@@ -27,26 +27,14 @@ export class RanksPage implements OnInit {
       return;
     } else {
       console.log(this.address);
-      this.blockchain.getAddressDetails(this.address);
+      this.blockchain.addressDetails(this.address);
     }
   }
 
-  /*
+  //// For fetching address details via api ////
   rankDetails(event) {
     console.log(event.row);
-    let props: NavigationExtras = {
-      queryParams: {
-        rank: JSON.stringify(event.row)
-      }
-    }
-    this.router.navigate(['/menu/rank/event.row.address'], props);
-  }
-  */
-
-  // For fetching address details via api //
-  rankDetails(event) {
-    console.log(event.row);
-    this.blockchain.getAddressDetails(event.row.address)
+    this.blockchain.addressDetails(event.row.address)
   }
 
    //// Toggling bootstrap and dark theme ////

@@ -36,13 +36,13 @@
     </ion-row>
 
     <ion-row class="details">
-      <h4>Height</h4>
-      <p>{{ blockchain.status.blocks }}</p>
+      <h4>Block Height</h4>
+      <p>{{ fixNumber(blockchain.status.blocks) }}</p>
     </ion-row>
 
     <ion-row class="details">
       <h4>Total Transactions</h4>
-      <p>{{ blockchain.totalTx }}</p>
+      <p>{{ fixNumber(blockchain.totalTx) }}</p>
     </ion-row>
 
     <ion-row class="details">

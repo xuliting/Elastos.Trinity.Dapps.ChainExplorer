@@ -31,6 +31,11 @@ export class BlocksPage implements OnInit {
     }
   }
 
+  async updateBlocks(event) {
+    await this.blockchain.fetchBlocks();
+    event.target.complete();
+  }
+
   blockDetails(event) {
     console.log(event.row);
     let props: NavigationExtras = {

@@ -23,20 +23,21 @@ export class BlockchainService {
   public totalTx: number = null;
 
   public tableStyle: string = 'bootstrap';
+  public loader: any;
   private httpRequest: any;
 
   constructor(
     private http: HttpClient,
     private router: Router,
+    private alertCtrl: AlertController,
     public loadingCtrl: LoadingController,
-    private alertCtrl: AlertController
   ) { }
 
   init() {
-    setInterval(() => {
+   /*  setInterval(() => {
       this.fetchBlocks();
     }, 10000);
-
+ */
     this.fetchBlocks();
     this.fetchStatus();
     this.fetchRanks();
@@ -57,7 +58,8 @@ export class BlockchainService {
 
   fetchBlocks() {
     console.log('Fetching Blocks..');
-    this.http.get<any>('https://blockchain.elastos.org/api/v1/blocks?limit=20').subscribe((res: any) => {
+    return new Promise((resolve, reject) => {
+      this.http.get<any>('https://blockchain.elastos.org/api/v1/blocks?limit=20').subscribe((res: any) => {
       console.log('Blocks fetched', res);
       this.totalTx = res.number_of_transactions;
       this.blocks = this.blocks.concat(res.blocks);
@@ -66,9 +68,11 @@ export class BlockchainService {
       });
       this.orgBlocks(this.blocks);
       this.getTx();
-
+      resolve();
     }, err => {
-      console.log(err);
+        console.log(err);
+        resolve();
+      });
     });
   }
 
@@ -150,7 +154,32 @@ export class BlockchainService {
     });
   }
 
-  async getAddressDetails(address: string) {
+  /** Call address api w/o tx details **/
+  addressDetails(address: string) {
+    this.loading('address', address);
+    console.log('Fetching address details', address);
+
+    this.httpRequest = this.http.get<any>('https://blockchain.elastos.org/api/v1/addr/' + address + '/?noTxList=1').subscribe((res: Address) => {
+      console.log('Address details fetched', res);
+      this.loadingCtrl.dismiss();
+
+      let props: NavigationExtras = {
+        queryParams: {
+          address: JSON.stringify(res),
+        }
+      }
+
+      this.router.navigate(['/menu/rank/', address], props)
+    }, err => {
+      console.log(err.message);
+      this.loadingCtrl.dismiss();
+      this.loadingErr('address', address);
+    });
+  }
+
+  /** Call both address apis before navigating to address-info pg **/
+
+  /* async getAddressDetails(address: string) {
     this.loading('address', address);
 
     let addressInfo: Address = await this.addressDetails(address);
@@ -162,13 +191,15 @@ export class BlockchainService {
         addressTxInfo: JSON.stringify(addressTxInfo)
       }
     }
-    this.router.navigate(['/menu/rank/', address], props).then(() => {
-      this.loadingCtrl.dismiss();
+
+    this.loadingCtrl.dismiss().then(() => {
+      this.router.navigate(['/menu/rank/', address], props)
     });
   }
 
   addressDetails(address: string): Promise<Address> {
     console.log('Fetching address details', address);
+
     return new Promise((resolve, reject) => {
       this.httpRequest = this.http.get<any>('https://blockchain.elastos.org/api/v1/addr/' + address + '/?noTxList=1').subscribe((res: Address) => {
         console.log('Address details fetched', res);
@@ -194,11 +225,11 @@ export class BlockchainService {
         this.loadingErr('address', address);
       });
     })
-  }
+  } */
 
   /******************************** Controllers ********************************/
   async loading(type: string, value: string,) {
-    const loading = await this.loadingCtrl.create({
+    this.loader = await this.loadingCtrl.create({
       mode: "ios",
       spinner: 'bubbles',
       message: 'Loading ' + type.charAt(0).toUpperCase() + type.slice(1) + '...',
@@ -206,12 +237,13 @@ export class BlockchainService {
       backdropDismiss: true
     });
 
-    loading.onDidDismiss().then(() => {
-      console.log('Cancelling request', type + ':' + value);
+    this.loader.onDidDismiss().then(() => {
+      console.log('Cancelling/Received Request', type + ':' + value);
+      this.loader = null;
       this.httpRequest.unsubscribe();
     })
 
-    return await loading.present();
+    return await this.loader.present();
   }
 
   async loadingErr(type: string, value: string) {

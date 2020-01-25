@@ -15,7 +15,15 @@
 </ion-header>
 
 <ion-content *ngIf="blockchain.blocks.length > 0">
-
+  <ion-refresher slot="fixed" (ionRefresh)="updateBlocks($event)">
+    <ion-refresher-content
+      [class.darkRefresh]="blockchain.tableStyle === 'dark'"
+      [class.lightRefresh]="blockchain.tableStyle === 'bootstrap'"
+      pullingIcon="arrow-round-up"
+      pullingText="Update blocks"
+    >
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-grid [class.darkContainer]="blockchain.tableStyle === 'dark'" no-padding no-margin>
     <div class="search-container" [class.darkSearch]="tableStyle === 'dark'">
       <ion-searchbar
@@ -27,7 +35,6 @@
       >
       </ion-searchbar>
     </div>
-
     <ion-list no-padding no-margin>
       <ngx-datatable
         [rows]="blockchain.blocks"

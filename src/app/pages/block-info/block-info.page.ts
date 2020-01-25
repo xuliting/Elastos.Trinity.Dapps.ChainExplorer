@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { LoadingController, NavController } from '@ionic/angular';
 
 import { Block } from 'src/app/models/blocks.model';
 import { BlockchainService } from 'src/app/services/blockchain.service';
@@ -18,7 +18,8 @@ export class BlockInfoPage implements OnInit {
     public blockchain: BlockchainService,
     private route: ActivatedRoute,
     private router: Router,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private loadingCtrl: LoadingController,
   ) { }
 
   ngOnInit() {
@@ -30,8 +31,18 @@ export class BlockInfoPage implements OnInit {
     });
   }
 
+  ionViewDidEnter() {
+    if(this.blockchain.loader) {
+      this.blockchain.loadingCtrl.dismiss();
+    }
+  }
+
   getDate(timestamp: number) {
     return new Date(timestamp * 1000).toLocaleString();
+  }
+
+  fixNumber(number: number): string {
+    return number.toLocaleString().split(/\s/).join(',');
   }
 
   goBack() {

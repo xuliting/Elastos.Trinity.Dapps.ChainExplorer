@@ -25,7 +25,7 @@
         </ion-col>
       </ion-row>
 
-      <!-- Block summary -->
+      <!-- Tx summary -->
 
       <ion-row>
         <ion-col size="12" class="section">
@@ -45,7 +45,7 @@
 
       <ion-row class="details">
         <h4>Size</h4>
-        <p>{{ tx.size }}</p>
+        <p>{{ fixNumber(tx.size) }}</p>
       </ion-row>
 
       <ion-row class="details">
@@ -55,7 +55,7 @@
 
       <ion-row class="details">
         <h4>Block Height</h4>
-        <p>{{ tx.blockheight }}</p>
+        <p>{{ fixNumber(tx.blockheight) }}</p>
       </ion-row>
 
       <div class="overflow" margin-horizontal>
@@ -67,6 +67,8 @@
           </p>
         </ion-row>
       </div>
+
+      <!-- Tx Details -->
 
       <ion-row padding-top>
         <ion-col size="12" class="section">
@@ -87,7 +89,7 @@
           <ion-img *ngIf="blockchain.tableStyle === 'bootstrap'" src="../assets/images/tx.png"></ion-img>
           <div *ngIf="blockchain.tableStyle === 'dark'"><ion-icon name="send"></ion-icon></div>
           <div>
-            <p *ngFor="let x of tx.vout" (click)="blockchain.getAddressDetails(x.scriptPubKey.addresses[0])">
+            <p *ngFor="let x of tx.vout" (click)="blockchain.addressDetails(x.scriptPubKey.addresses[0])">
               {{ x.scriptPubKey.addresses[0].slice(0,18) }}...
               &nbsp; <ion-icon mode="ios" name="arrow-forward"></ion-icon>
             </p>
@@ -113,7 +115,7 @@
 
         <ion-row class="details">
           <h4>Sender</h4>
-          <p (click)="blockchain.getAddressDetails(tx.vin[0].addr)">
+          <p (click)="blockchain.addressDetails(tx.vin[0].addr)">
             {{ tx.vin[0].addr.slice(0,18) }}...
             &nbsp; <ion-icon mode="ios" name="arrow-forward"></ion-icon>
           </p>
@@ -126,7 +128,7 @@
           <ion-img *ngIf="blockchain.tableStyle === 'bootstrap'" src="../assets/images/tx.png"></ion-img>
           <div *ngIf="blockchain.tableStyle === 'dark'"><ion-icon name="send"></ion-icon></div>
           <div>
-            <p *ngFor="let x of tx.vout" (click)="blockchain.getAddressDetails(x.scriptPubKey.addresses[0])">
+            <p *ngFor="let x of tx.vout" (click)="blockchain.addressDetails(x.scriptPubKey.addresses[0])">
               {{ x.scriptPubKey.addresses[0].slice(0,18) }}...
               &nbsp; <ion-icon mode="ios" name="arrow-forward"></ion-icon>
             </p>
@@ -152,7 +154,7 @@
 
         <ion-row class="details">
           <h4>Sender</h4>
-          <p (click)="blockchain.getAddressDetails(tx.vin[0].addr)">
+          <p (click)="blockchain.addressDetails(tx.vin[0].addr)">
             {{ tx.vin[0].addr.slice(0,18) }}...
             &nbsp; <ion-icon mode="ios" name="arrow-forward"></ion-icon>
           </p>
@@ -165,7 +167,7 @@
           <ion-img *ngIf="blockchain.tableStyle === 'bootstrap'" src="../assets/images/tx.png"></ion-img>
           <div *ngIf="blockchain.tableStyle === 'dark'"><ion-icon name="send"></ion-icon></div>
           <div>
-            <p *ngFor="let x of tx.vout" (click)="blockchain.getAddressDetails(x.scriptPubKey.addresses[0])">
+            <p *ngFor="let x of tx.vout" (click)="blockchain.addressDetails(x.scriptPubKey.addresses[0])">
               {{ x.scriptPubKey.addresses[0].slice(0,18) }}...
               &nbsp; <ion-icon mode="ios" name="arrow-forward"></ion-icon>
             </p>

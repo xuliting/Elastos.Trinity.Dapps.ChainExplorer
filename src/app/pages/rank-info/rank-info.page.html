@@ -30,63 +30,52 @@
       </ion-col>
     </ion-row>
 
+    <div *ngIf="rank">
+      <ion-row class="details">
+        <h4>Top</h4>
+        <p>#{{ this.blockchain.ranks.indexOf(rank) + 1 }}</p>
+      </ion-row>
+
+      <ion-row class="details">
+        <h4>Percentage</h4>
+        <p>{{ fixPercent(rank.percentage) }}%</p>
+      </ion-row>
+    </div>
+
+    <ion-row class="details">
+      <h4>Total Balance</h4>
+      <p>{{ fixNumber(address.balance) }}</p>
+    </ion-row>
+
     <ion-row class="details">
       <h4>Total Received</h4>
-      <p>{{ address.totalReceived }}</p>
+      <p>{{ fixNumber(address.totalReceived) }}</p>
     </ion-row>
 
     <ion-row class="details">
       <h4>Total Sent</h4>
-      <p>{{ address.totalSent }}</p>
-    </ion-row>
-
-    <ion-row class="details">
-      <h4>Total Balance</h4>
-      <p>{{ address.balance }}</p>
+      <p>{{ fixNumber(address.totalSent) }}</p>
     </ion-row>
 
     <ion-row class="details">
       <h4>No. of Transactions</h4>
-      <p>{{ address.txApperances }}</p>
+      <p>{{ fixNumber(address.txApperances) }}</p>
     </ion-row>
 
     <div class="overflow" margin-horizontal>
       <ion-row>
         <h4>Latest Transactions</h4>
+        <div *ngIf="!fetchingTx" (click)="getTxs(address.addrStr)"><ion-icon name="refresh"></ion-icon></div>
+        <div *ngIf="fetchingTx"><ion-spinner name="crescent"></ion-spinner></div>
       </ion-row>
 
-      <ion-row *ngFor="let tx of txs" (click)="blockchain.transDetails(tx.txid)">
-        <p>{{ tx.txid.slice(0,33)}} <br> {{ tx.txid.slice(33,66)}} <br> </p>
-        <p><ion-icon mode="ios" name="arrow-forward"></ion-icon></p>
-      </ion-row>
+      <div *ngIf="txs.length > 0">
+        <ion-row *ngFor="let tx of txs" (click)="blockchain.transDetails(tx.txid)">
+          <p>{{ tx.txid.slice(0,22)}} <br> {{ tx.txid.slice(22,44)}} <br> {{ tx.txid.slice(44,66)}} </p>
+          <p>{{ getDate(tx.time) }} &nbsp; <ion-icon mode="ios" name="arrow-forward"></ion-icon></p>
+        </ion-row>
+      </div>
     </div>
 
   </ion-grid>
 </ion-content>
-
-<!-- <ion-content>
-  <ion-grid class="container">
-
-    <ion-row>
-      <ion-col size="12" class="section">
-        <h2>Rank Summary</h2>
-      </ion-col>
-    </ion-row>
-
-    <ion-row class="details">
-      <h4>Address</h4>
-      <p>{{ rank.address }}</p>
-    </ion-row>
-
-    <ion-row class="details">
-      <h4>Balance</h4>
-      <p>{{ rank.balance }}</p>
-    </ion-row>
-
-    <ion-row class="details">
-      <h4>Percentage</h4>
-      <p>{{ rank.percentage }}</p>
-    </ion-row>
-
-  </ion-grid>
-</ion-content> -->

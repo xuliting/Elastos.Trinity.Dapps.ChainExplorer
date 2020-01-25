@@ -26,6 +26,11 @@ export class TxsPage implements OnInit {
     }
   }
 
+  async updateBlocks(event) {
+    await this.blockchain.fetchBlocks();
+    event.target.complete();
+  }
+
   //// Toggling bootstrap and dark theme ////
   switchMode() {
     if(this.blockchain.tableStyle === 'bootstrap') {

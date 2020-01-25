@@ -15,6 +15,10 @@ export class StatusPage implements OnInit {
   ngOnInit() {
   }
 
+  fixNumber(number: number): string {
+    return number.toLocaleString().split(/\s/).join(',');
+  }
+
   //// Toggling bootstrap and dark theme ////
   switchMode() {
     if(this.blockchain.tableStyle === 'bootstrap') {

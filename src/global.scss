@@ -126,10 +126,6 @@ ion-tab-bar {
   }
 }
 
-ion-spinner {
-  color: black;
-}
-
 /*** Datatable Rows ***/
 .highlight {
   color: #ffd31a;
@@ -153,7 +149,7 @@ ion-spinner {
   background-color: rgb(10, 10, 10);
 }
 
-/** Block/Tx/Address Details **/
+/** Light Mode - Block/Tx/Address Details **/
 .container {
   min-height: 100%;
   background: #FAFAFA;
@@ -225,10 +221,15 @@ ion-spinner {
   }
 }
 
+/** Dark Mode - Block/Tx/Address Details **/
 .darkContainer {
   min-height: 100%;
   color: white;
   background: #181b24;
+
+  ion-spinner {
+    color: white;
+  }
 
   .section {
     margin-left: 10px;
@@ -295,6 +296,28 @@ ion-spinner {
         color: #fafafa;
       }
     }
+  }
+}
+
+/** refresher on dark/light mode **/
+.lightRefresh {
+  padding-top: 45px;
+  padding-bottom: 100px;
+
+  .refresher-pulling-text, .refresher-refreshing-text, .refresher-refreshing-icon, .refresher-pulling-icon {
+    font-weight: 500;
+  }
+}
+
+.darkRefresh {
+  background-color: #1b1e27;
+  --color: white !important;
+  padding-top: 45px;
+  padding-bottom: 100px;
+
+  .refresher-pulling-text, .refresher-refreshing-text, .refresher-refreshing-icon, .refresher-pulling-icon {
+    color: #fff !important;
+    font-weight: 500;
   }
 }
 
