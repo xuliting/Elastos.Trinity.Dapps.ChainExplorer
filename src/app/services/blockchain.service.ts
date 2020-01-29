@@ -23,8 +23,8 @@ export class BlockchainService {
 
   public tableStyle: string = 'bootstrap';
   public loader: any;
-  private httpRequest: any;
-  private api: string = 'https://blockchain.elastos.org/api/v1/';
+  public httpRequest: any;
+  public api: string = 'https://blockchain.elastos.org/api/v1/';
 
   constructor(
     public storage: StorageService,

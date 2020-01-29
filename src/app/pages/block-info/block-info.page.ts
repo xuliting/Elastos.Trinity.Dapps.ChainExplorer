@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { LoadingController, NavController } from '@ionic/angular';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
+import { LoadingController, NavController, AlertController } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
 
 import { Block } from 'src/app/models/blocks.model';
 import { BlockchainService } from 'src/app/services/blockchain.service';
+
 
 @Component({
   selector: 'app-block-info',
@@ -19,7 +21,9 @@ export class BlockInfoPage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private navCtrl: NavController,
+    private http: HttpClient,
     private loadingCtrl: LoadingController,
+    private alertCtrl: AlertController,
   ) { }
 
   ngOnInit() {
@@ -47,5 +51,28 @@ export class BlockInfoPage implements OnInit {
 
   goBack() {
     this.navCtrl.back();
+  }
+
+  /*** Fetch tx details ***/
+  txDetails(transaction: string) {
+    console.log('Fetching tx', transaction);
+    this.blockchain.loading('transaction', transaction);
+
+    this.blockchain.httpRequest = this.http.get<any>(this.blockchain.api + 'tx/' + transaction).subscribe((res: any) => {
+      console.log('Tx fetched', res);
+      this.loadingCtrl.dismiss();
+
+      let props: NavigationExtras = {
+        queryParams: {
+          tx: JSON.stringify(res)
+        }
+      }
+      this.router.navigate(['/menu/trans/', transaction], props);
+
+    }, err => {
+      console.log(err.message);
+      this.loadingCtrl.dismiss();
+      this.blockchain.loadingErr('transaction', transaction);
+    });
   }
 }
