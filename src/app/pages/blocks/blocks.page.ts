@@ -55,6 +55,7 @@ export class BlocksPage implements OnInit {
       this.blockchain.tableStyle = 'bootstrap';
       this.tableStyle = 'bootstrap';
     }
+    this.blockchain.saveMode(this.tableStyle);
   }
 
   getRowClass(row) {

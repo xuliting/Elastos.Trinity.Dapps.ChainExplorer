@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 import { LoadingController, AlertController } from '@ionic/angular';
 import { Router, NavigationExtras } from '@angular/router';
 
@@ -9,6 +7,7 @@ import { Block, FormattedBlock } from '../models/blocks.model';
 import { Rank, Address } from '../models/ranks.model';
 import { Status } from '../models/status.model';
 import { Tx } from '../models/tx.model';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +24,10 @@ export class BlockchainService {
   public tableStyle: string = 'bootstrap';
   public loader: any;
   private httpRequest: any;
+  private api: string = 'https://blockchain.elastos.org/api/v1/';
 
   constructor(
+    public storage: StorageService,
     private http: HttpClient,
     private router: Router,
     private alertCtrl: AlertController,
@@ -38,6 +39,7 @@ export class BlockchainService {
       this.fetchBlocks();
     }, 10000);
  */
+    this.getMode();
     this.fetchBlocks();
     this.fetchStatus();
     this.fetchRanks();
@@ -46,7 +48,7 @@ export class BlockchainService {
   /******************************** Get Block/Tx/Rank/Status  ********************************/
   fetchRanks() {
     console.log('Fetching Ranks..');
-    this.http.get<any>('https://blockchain.elastos.org/api/v1/addrs/richest-list').subscribe((res: any) => {
+    this.http.get<any>(this.api + 'addrs/richest-list').subscribe((res: any) => {
       console.log('Ranks fetched', res);
       this.ranks = res.info;
       console.log('Ranks concat', this.ranks);
@@ -59,7 +61,7 @@ export class BlockchainService {
   fetchBlocks() {
     console.log('Fetching Blocks..');
     return new Promise((resolve, reject) => {
-      this.http.get<any>('https://blockchain.elastos.org/api/v1/blocks?limit=20').subscribe((res: any) => {
+      this.http.get<any>(this.api + 'blocks?limit=20').subscribe((res: any) => {
       console.log('Blocks fetched', res);
       this.totalTx = res.number_of_transactions;
       this.blocks = this.blocks.concat(res.blocks);
@@ -78,7 +80,7 @@ export class BlockchainService {
 
   fetchStatus() {
     console.log('Fetching Status..');
-    this.http.get<any>('https://blockchain.elastos.org/api/v1/status/?q=getInfo').subscribe((res: any) => {
+    this.http.get<any>(this.api + 'status/?q=getInfo').subscribe((res: any) => {
       console.log('Chain status fetched', res);
       this.status = res.info;
     }, err => {
@@ -114,7 +116,7 @@ export class BlockchainService {
     console.log('Fetching block', block);
     this.loading('block', block);
 
-    this.httpRequest = this.http.get<any>('https://blockchain.elastos.org/api/v1/block/' + block).subscribe((res: any) => {
+    this.httpRequest = this.http.get<any>(this.api + 'block/' + block).subscribe((res: any) => {
       console.log('Block fetched', res);
       this.loadingCtrl.dismiss();
 
@@ -136,7 +138,7 @@ export class BlockchainService {
     console.log('Fetching tx', transaction);
     this.loading('transaction', transaction);
 
-    this.httpRequest = this.http.get<any>('https://blockchain.elastos.org/api/v1/tx/' + transaction).subscribe((res: any) => {
+    this.httpRequest = this.http.get<any>(this.api + 'tx/' + transaction).subscribe((res: any) => {
       console.log('Tx fetched', res);
       this.loadingCtrl.dismiss();
 
@@ -159,7 +161,7 @@ export class BlockchainService {
     this.loading('address', address);
     console.log('Fetching address details', address);
 
-    this.httpRequest = this.http.get<any>('https://blockchain.elastos.org/api/v1/addr/' + address + '/?noTxList=1').subscribe((res: Address) => {
+    this.httpRequest = this.http.get<any>(this.api + 'addr/' + address + '/?noTxList=1').subscribe((res: Address) => {
       console.log('Address details fetched', res);
       this.loadingCtrl.dismiss();
 
@@ -255,9 +257,21 @@ export class BlockchainService {
     });
     await alert.present();
   }
+
+  /******************************** Storage ********************************/
+  saveMode(mode: string) {
+    console.log('Saving mode', mode);
+    this.storage.setMode(mode);
+  }
+
+  getMode() {
+    this.storage.getMode().then((data: string) => {
+      console.log(data);
+      this.tableStyle = data;
+      console.log(data, this.tableStyle);
+    });
+  }
 }
-
-
 // Blocks Ex:
 // https://blockchain.elastos.org/api/v1/blocks/?limit=20
 

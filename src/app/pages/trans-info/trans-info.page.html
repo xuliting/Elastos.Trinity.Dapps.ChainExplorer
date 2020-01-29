@@ -61,7 +61,7 @@
       <div class="overflow" margin-horizontal>
         <ion-row>
           <h4>Block Hash</h4>
-          <p padding-top (click)="blockchain.blockDetails(tx.blockhash)">
+          <p padding-top (click)="blockchain.blockDetails(tx.blockhash)" class="link">
             {{ tx.blockhash.slice(0,18) }}...
             &nbsp; <ion-icon mode="ios" name="arrow-forward"></ion-icon>
           </p>
@@ -89,7 +89,7 @@
           <ion-img *ngIf="blockchain.tableStyle === 'bootstrap'" src="../assets/images/tx.png"></ion-img>
           <div *ngIf="blockchain.tableStyle === 'dark'"><ion-icon name="send"></ion-icon></div>
           <div>
-            <p *ngFor="let x of tx.vout" (click)="blockchain.addressDetails(x.scriptPubKey.addresses[0])">
+            <p *ngFor="let x of tx.vout" (click)="blockchain.addressDetails(x.scriptPubKey.addresses[0])" class="link">
               {{ x.scriptPubKey.addresses[0].slice(0,18) }}...
               &nbsp; <ion-icon mode="ios" name="arrow-forward"></ion-icon>
             </p>
@@ -115,7 +115,7 @@
 
         <ion-row class="details">
           <h4>Sender</h4>
-          <p (click)="blockchain.addressDetails(tx.vin[0].addr)">
+          <p (click)="blockchain.addressDetails(tx.vin[0].addr)" class="link">
             {{ tx.vin[0].addr.slice(0,18) }}...
             &nbsp; <ion-icon mode="ios" name="arrow-forward"></ion-icon>
           </p>
@@ -128,7 +128,7 @@
           <ion-img *ngIf="blockchain.tableStyle === 'bootstrap'" src="../assets/images/tx.png"></ion-img>
           <div *ngIf="blockchain.tableStyle === 'dark'"><ion-icon name="send"></ion-icon></div>
           <div>
-            <p *ngFor="let x of tx.vout" (click)="blockchain.addressDetails(x.scriptPubKey.addresses[0])">
+            <p *ngFor="let x of tx.vout" (click)="blockchain.addressDetails(x.scriptPubKey.addresses[0])" class="link">
               {{ x.scriptPubKey.addresses[0].slice(0,18) }}...
               &nbsp; <ion-icon mode="ios" name="arrow-forward"></ion-icon>
             </p>
@@ -154,7 +154,7 @@
 
         <ion-row class="details">
           <h4>Sender</h4>
-          <p (click)="blockchain.addressDetails(tx.vin[0].addr)">
+          <p (click)="blockchain.addressDetails(tx.vin[0].addr)" class="link">
             {{ tx.vin[0].addr.slice(0,18) }}...
             &nbsp; <ion-icon mode="ios" name="arrow-forward"></ion-icon>
           </p>
@@ -167,7 +167,7 @@
           <ion-img *ngIf="blockchain.tableStyle === 'bootstrap'" src="../assets/images/tx.png"></ion-img>
           <div *ngIf="blockchain.tableStyle === 'dark'"><ion-icon name="send"></ion-icon></div>
           <div>
-            <p *ngFor="let x of tx.vout" (click)="blockchain.addressDetails(x.scriptPubKey.addresses[0])">
+            <p *ngFor="let x of tx.vout" (click)="blockchain.addressDetails(x.scriptPubKey.addresses[0])" class="link">
               {{ x.scriptPubKey.addresses[0].slice(0,18) }}...
               &nbsp; <ion-icon mode="ios" name="arrow-forward"></ion-icon>
             </p>

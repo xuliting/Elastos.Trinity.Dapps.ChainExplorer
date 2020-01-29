@@ -14,6 +14,7 @@ export class TxsPage implements OnInit {
   constructor(public blockchain: BlockchainService) { }
 
   ngOnInit() {
+    this.tableStyle = this.blockchain.tableStyle;
   }
 
   searchTx() {
@@ -40,6 +41,6 @@ export class TxsPage implements OnInit {
       this.blockchain.tableStyle = 'bootstrap';
       this.tableStyle = 'bootstrap';
     }
+    this.blockchain.saveMode(this.tableStyle);
   }
-
 }

@@ -219,6 +219,14 @@ ion-tab-bar {
       }
     }
   }
+
+  .link {
+    color: #007AFF !important;
+
+    ion-icon {
+      color: #868f96;
+    }
+  }
 }
 
 /** Dark Mode - Block/Tx/Address Details **/
@@ -295,6 +303,15 @@ ion-tab-bar {
         margin: 0 0 16px;
         color: #fafafa;
       }
+    }
+  }
+
+
+  .link {
+    color: #007AFF !important;
+
+    ion-icon {
+      color: white;
     }
   }
 }

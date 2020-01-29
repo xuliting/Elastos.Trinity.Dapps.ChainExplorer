@@ -71,7 +71,7 @@
 
       <div *ngIf="txs.length > 0">
         <ion-row *ngFor="let tx of txs" (click)="blockchain.transDetails(tx.txid)">
-          <p>{{ tx.txid.slice(0,22)}} <br> {{ tx.txid.slice(22,44)}} <br> {{ tx.txid.slice(44,66)}} </p>
+          <p class="link">{{ tx.txid.slice(0,22)}} <br> {{ tx.txid.slice(22,44)}} <br> {{ tx.txid.slice(44,66)}} </p>
           <p>{{ getDate(tx.time) }} &nbsp; <ion-icon mode="ios" name="arrow-forward"></ion-icon></p>
         </ion-row>
       </div>

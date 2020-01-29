@@ -13,6 +13,7 @@ export class StatusPage implements OnInit {
   constructor(public blockchain: BlockchainService) { }
 
   ngOnInit() {
+    this.tableStyle = this.blockchain.tableStyle;
   }
 
   fixNumber(number: number): string {
@@ -28,6 +29,7 @@ export class StatusPage implements OnInit {
       this.blockchain.tableStyle = 'bootstrap';
       this.tableStyle = 'bootstrap';
     }
+    this.blockchain.saveMode(this.tableStyle);
   }
 
 }

@@ -46,6 +46,7 @@ export class RanksPage implements OnInit {
       this.blockchain.tableStyle = 'bootstrap';
       this.tableStyle = 'bootstrap';
     }
+    this.blockchain.saveMode(this.tableStyle);
   }
 
   getRowClass(row) {

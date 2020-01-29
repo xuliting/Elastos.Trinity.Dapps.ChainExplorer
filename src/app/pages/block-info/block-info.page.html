@@ -126,7 +126,7 @@
       </ion-row>
 
       <ion-row *ngFor="let tx of block.tx" (click)="blockchain.transDetails(tx)">
-        <p>{{ tx.slice(0,33)}} <br> {{ tx.slice(33,66)}} <br> </p>
+        <p class="link">{{ tx.slice(0,33) }} <br> {{ tx.slice(33,66) }} <br> </p>
         <p><ion-icon mode="ios" name="arrow-forward"></ion-icon></p>
       </ion-row>
     </div>
