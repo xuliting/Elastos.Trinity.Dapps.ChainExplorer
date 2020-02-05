@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { BlockchainService } from 'src/app/services/blockchain.service';
 import { Router, NavigationExtras } from '@angular/router';
 
+declare let appManager: AppManagerPlugin.AppManager;
+
 @Component({
   selector: 'app-blocks',
   templateUrl: './blocks.page.html',
@@ -19,6 +21,10 @@ export class BlocksPage implements OnInit {
 
   ngOnInit() {
     this.tableStyle = this.blockchain.tableStyle;
+  }
+
+  ionViewDidEnter() {
+    appManager.setVisible("show", ()=>{}, (err)=>{});
   }
 
   searchBlock() {
