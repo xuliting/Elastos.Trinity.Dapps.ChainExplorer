@@ -33,7 +33,9 @@
     "NetworkStatus"
   ],
   "urls": [
-    "https://blockchain.elastos.org/*"
+    "https://cors-anywhere.herokuapp.com/*",
+    "https://blockchain.elastos.org/*",
+    "https://elanodes.com/*"
   ],
   "background_color": "#4e8ef7",
   "theme_display": "show",

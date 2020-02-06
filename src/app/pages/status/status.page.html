@@ -45,6 +45,23 @@
       <p>{{ fixNumber(blockchain.totalTx) }}</p>
     </ion-row>
 
+    <div *ngIf="blockchain.statsFetched">
+      <ion-row class="details">
+        <h4>Transactions Per Hour</h4>
+        <p>{{ blockchain.mainchain.txperhr }}</p>
+      </ion-row>
+
+      <ion-row class="details">
+        <h4>Active Addresses</h4>
+        <p>{{ fixNumber(blockchain.mainchain.activeaddresses) }}</p>
+      </ion-row>
+
+      <ion-row class="details">
+        <h4>Bitcoin Hashrate Used</h4>
+        <p>{{ blockchain.block.percentBTChashrate}}%</p>
+      </ion-row>
+    </div>
+
     <ion-row class="details">
       <h4>Version</h4>
       <p>{{ blockchain.status.version }}</p>

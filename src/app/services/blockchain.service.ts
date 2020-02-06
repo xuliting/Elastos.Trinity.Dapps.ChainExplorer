@@ -6,14 +6,16 @@ import { Router, NavigationExtras } from '@angular/router';
 import { Block, FormattedBlock } from '../models/blocks.model';
 import { Rank, Address } from '../models/ranks.model';
 import { Status } from '../models/status.model';
-import { Tx } from '../models/tx.model';
 import { StorageService } from './storage.service';
+import { Mainchain, Price, Voters, _Block } from '../models/stats.model';
+import { Tx } from '../models/tx.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BlockchainService {
 
+  // blockchain api
   public blocks: Block[] = [];
   public formattedBlocks: FormattedBlock[] = [];
   public ranks: Rank[] = [];
@@ -21,10 +23,18 @@ export class BlockchainService {
   public status: Status;
   public totalTx: number = null;
 
+  // elanode api
+  public statsFetched: boolean = false;
+  public mainchain: Mainchain;
+  public voters: Voters;
+  public price: Price;
+  public block: _Block;
+
   public tableStyle: string = 'bootstrap';
   public loader: any;
   public httpRequest: any;
   public api: string = 'https://blockchain.elastos.org/api/v1/';
+  public proxyurl = "https://cors-anywhere.herokuapp.com/";
 
   constructor(
     public storage: StorageService,
@@ -35,17 +45,25 @@ export class BlockchainService {
   ) { }
 
   init() {
-   /*  setInterval(() => {
-      this.fetchBlocks();
-    }, 10000);
- */
     this.getMode();
+    this.fetchStats();
     this.fetchBlocks();
     this.fetchStatus();
     this.fetchRanks();
   }
 
   /******************************** Get Block/Tx/Rank/Status  ********************************/
+  fetchStats() {
+    this.http.get<any>(this.proxyurl + 'https://elanodes.com/api/widgets').subscribe((res) => {
+      console.log(res);
+      this.statsFetched = true;
+      this.mainchain = res.mainchain;
+      this.voters = res.voters;
+      this.price = res.price;
+      this.block = res.block;
+    });
+  }
+
   fetchRanks() {
     console.log('Fetching Ranks..');
     this.http.get<any>(this.api + 'addrs/richest-list').subscribe((res: any) => {
@@ -134,11 +152,11 @@ export class BlockchainService {
     });
   }
 
-  transDetails(transaction: string) {
+  transDetails = (transaction: string) => {
     console.log('Fetching tx', transaction);
     this.loading('transaction', transaction);
 
-    this.httpRequest = this.http.get<any>(this.api + 'tx/' + transaction).subscribe((res: any) => {
+    this.httpRequest = this.http.get<Tx>(this.api + 'tx/' + transaction).subscribe((res: Tx) => {
       console.log('Tx fetched', res);
       this.loadingCtrl.dismiss();
 
@@ -266,9 +284,10 @@ export class BlockchainService {
 
   getMode() {
     this.storage.getMode().then((data: string) => {
-      console.log(data);
-      this.tableStyle = data;
-      console.log(data, this.tableStyle);
+      if(data) {
+        this.tableStyle = data;
+        console.log(data);
+      }
     });
   }
 }
