@@ -24,7 +24,7 @@
     >
     </ion-refresher-content>
   </ion-refresher>
-  <ion-grid [class.darkContainer]="blockchain.tableStyle === 'dark'" no-padding no-margin>
+  <ion-grid [class.darkContainer]="blockchain.tableStyle === 'dark'" class="ion-no-padding ion-no-margin">
     <div class="search-container" [class.darkSearch]="tableStyle === 'dark'">
       <ion-searchbar
         mode="ios"
@@ -35,7 +35,7 @@
       >
       </ion-searchbar>
     </div>
-    <ion-list no-padding no-margin>
+    <ion-list class="ion-no-padding ion-no-margin">
       <ngx-datatable
         [rows]="blockchain.blocks"
         [ngClass]="tableStyle"

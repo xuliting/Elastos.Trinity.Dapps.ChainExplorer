@@ -15,7 +15,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid class="container" [class.darkContainer]="blockchain.tableStyle === 'dark'" padding-top>
+  <ion-grid class="container ion-padding-top" [class.darkContainer]="blockchain.tableStyle === 'dark'">
 
     <ion-row>
       <ion-col class="block-header">
@@ -77,30 +77,30 @@
       <p>{{ block.nonce }}</p>
     </ion-row>
 
-    <div class="overflow" margin-horizontal>
+    <div class="overflow ion-margin-horizontal">
       <ion-row>
         <h4>Hash</h4>
-        <p padding-top>
+        <p class="ion-padding-top">
           {{ block.hash.slice(0,33) }} <br>
           {{ block.hash.slice(33,66) }}
         </p>
       </ion-row>
     </div>
 
-    <div class="overflow" margin-horizontal>
+    <div class="overflow ion-margin-horizontal">
       <ion-row>
         <h4>Previous Block</h4>
-        <p padding-top>
+        <p class="ion-padding-top">
           {{ block.previousblockhash.slice(0,33) }} <br>
           {{ block.previousblockhash.slice(33,66) }}
         </p>
       </ion-row>
     </div>
 
-    <div class="overflow" margin-horizontal>
+    <div class="overflow ion-margin-horizontal">
       <ion-row>
         <h4>Merkle Root</h4>
-        <p padding-top>
+        <p class="ion-padding-top">
           {{ block.merkleroot.slice(0,33) }} <br>
           {{ block.merkleroot.slice(33,66 ) }}
         </p>
@@ -109,7 +109,7 @@
 
     <!-- Transactions -->
 
-    <ion-row padding-top>
+    <ion-row class="ion-padding-top">
       <ion-col size="12" class="section">
         <h2>Transaction Summary</h2>
       </ion-col>
@@ -120,7 +120,7 @@
       <p>{{ block.txlength }}</p>
     </ion-row>
 
-    <div class="overflow" margin-horizontal>
+    <div class="overflow ion-margin-horizontal">
       <ion-row>
         <h4>Transactions</h4>
       </ion-row>
@@ -133,16 +133,16 @@
 
     <!-- Confirm Info -->
 
-    <ion-row padding-top>
+    <ion-row class="ion-padding-top">
       <ion-col size="12" class="section">
         <h2>Confirmation Summary</h2>
       </ion-col>
     </ion-row>
 
-    <div class="overflow" margin-horizontal>
+    <div class="overflow ion-margin-horizontal">
       <ion-row>
         <h4>Sponsor</h4>
-        <p padding-top>
+        <p class="ion-padding-top">
           {{ block.confirmInfo.sponsor.slice(0,33) }} <br>
           {{ block.confirmInfo.sponsor.slice(33,66) }}
         </p>
@@ -154,7 +154,7 @@
       <p>{{ block.confirmInfo.viewoffset }}</p>
     </ion-row>
 
-    <div class="overflow" margin-horizontal>
+    <div class="overflow ion-margin-horizontal">
       <ion-row>
         <h4>Votes List</h4>
       </ion-row>

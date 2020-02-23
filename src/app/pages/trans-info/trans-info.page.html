@@ -15,7 +15,7 @@
 </ion-header>
 
   <ion-content>
-    <ion-grid class="container" [class.darkContainer]="blockchain.tableStyle === 'dark'" padding-top>
+    <ion-grid class="container ion-padding-top" [class.darkContainer]="blockchain.tableStyle === 'dark'">
 
       <ion-row>
         <ion-col class="tx-header">
@@ -58,10 +58,10 @@
         <p>{{ fixNumber(tx.blockheight) }}</p>
       </ion-row>
 
-      <div class="overflow" margin-horizontal>
+      <div class="overflow ion-margin-horizontal">
         <ion-row>
           <h4>Block Hash</h4>
-          <p padding-top (click)="blockchain.blockDetails(tx.blockhash)" class="link">
+          <p (click)="blockchain.blockDetails(tx.blockhash)" class="link ion-padding-top">
             {{ tx.blockhash.slice(0,18) }}...
             &nbsp; <ion-icon mode="ios" name="arrow-forward"></ion-icon>
           </p>
@@ -70,7 +70,7 @@
 
       <!-- Tx Details -->
 
-      <ion-row padding-top>
+      <ion-row class="ion-padding-top">
         <ion-col size="12" class="section">
           <h2>Transaction Details</h2>
         </ion-col>

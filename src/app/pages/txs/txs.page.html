@@ -35,7 +35,7 @@
       >
       </ion-searchbar>
     </div>
-    <ion-row *ngFor="let tx of blockchain.txs" (click)="blockchain.transDetails(tx)" margin-horizontal>
+    <ion-row *ngFor="let tx of blockchain.txs" (click)="blockchain.transDetails(tx)" class="ion-margin-horizontal">
       <p>{{ tx.slice(0,33)}} <br> {{ tx.slice(33,66)}} <br> </p>
       <p><ion-icon mode="ios" name="arrow-forward"></ion-icon></p>
     </ion-row>

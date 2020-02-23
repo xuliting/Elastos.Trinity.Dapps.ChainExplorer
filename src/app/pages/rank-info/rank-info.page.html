@@ -15,7 +15,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid class="container" [class.darkContainer]="blockchain.tableStyle === 'dark'" padding-top>
+  <ion-grid class="container ion-padding-top" [class.darkContainer]="blockchain.tableStyle === 'dark'">
 
     <ion-row>
       <ion-col class="address-header">
@@ -62,7 +62,7 @@
       <p>{{ fixNumber(address.txApperances) }}</p>
     </ion-row>
 
-    <div class="overflow" margin-horizontal>
+    <div class="overflow ion-margin-horizontal">
       <ion-row>
         <h4>Latest Transactions</h4>
         <div *ngIf="!fetchingTx" (click)="getTxs(address.addrStr)"><ion-icon name="refresh"></ion-icon></div>
