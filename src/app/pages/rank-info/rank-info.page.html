@@ -1,7 +1,7 @@
 <ion-content>
   <ion-grid class="container ion-padding-top" [class.darkContainer]="blockchain.tableStyle === 'dark'">
 
-    <ion-row>
+    <ion-row class="ion-padding-vertical">
       <ion-col class="address-header">
         <div><ion-icon name="pin" mode="ios"></ion-icon></div> &nbsp;
         <ion-label>{{ address.addrStr.slice(0,18) }} <br> {{ address.addrStr.slice(18,36) }}</ion-label>

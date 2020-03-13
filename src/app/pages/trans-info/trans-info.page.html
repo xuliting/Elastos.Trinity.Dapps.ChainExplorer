@@ -1,7 +1,7 @@
 <ion-content>
   <ion-grid class="container ion-padding-top" [class.darkContainer]="blockchain.tableStyle === 'dark'">
 
-    <ion-row>
+    <ion-row class="ion-padding-vertical">
       <ion-col class="tx-header">
         <ion-img *ngIf="blockchain.tableStyle === 'bootstrap'" src="../assets/images/tx.png"></ion-img> &nbsp;
         <div *ngIf="blockchain.tableStyle === 'dark'"><ion-icon name="send"></ion-icon></div> &nbsp;
