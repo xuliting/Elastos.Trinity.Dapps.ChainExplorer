@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BlockchainService } from 'src/app/services/blockchain.service';
 
 declare let appManager: AppManagerPlugin.AppManager;
+declare let titleBarManager: TitleBarPlugin.TitleBarManager;
 
 @Component({
   selector: 'app-menu',
@@ -16,7 +17,9 @@ export class MenuPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    appManager.setVisible("show", ()=>{}, (err)=>{});
+    appManager.setVisible("show");
+    titleBarManager.setBackgroundColor("#000000");
+    titleBarManager.setForegroundMode(TitleBarPlugin.TitleBarForegroundMode.LIGHT);
   }
 
   minimizeApp() {

@@ -21,10 +21,6 @@ const routes: Routes = [
       { path: 'rank/:rankId', loadChildren: '../rank-info/rank-info.module#RankInfoPageModule' },
       { path: 'trans/:transId', loadChildren: '../trans-info/trans-info.module#TransInfoPageModule' },
     ]
-  },
-  {
-    path: '',
-    redirectTo: '/menu/blocks'
   }
 ];
 

@@ -3,6 +3,7 @@ import { Platform } from '@ionic/angular';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { BlockchainService } from './services/blockchain.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'my-app',
@@ -14,6 +15,7 @@ export class MyApp {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private blockchain: BlockchainService,
+    private router: Router
   ) {
     this.initializeApp();
   }
@@ -23,6 +25,8 @@ export class MyApp {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.blockchain.init();
+
+      this.router.navigate(["menu/blocks"]);
     });
   }
 }
