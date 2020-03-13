@@ -1,20 +1,11 @@
-<ion-header no-border>
-  <ion-toolbar mode="ios">
-    <ion-buttons slot="start" class="header-btns">
-      <ion-button (click)="switchMode()" [class.highlight]="blockchain.tableStyle === 'bootstrap'">
-        <ion-icon name="sunny" mode="ios"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-title>Latest Blocks</ion-title>
-    <ion-buttons slot="end" class="header-btns">
-      <ion-menu-toggle>
-        <ion-icon src="../assets/icon/menu.svg"></ion-icon>
-      </ion-menu-toggle>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content *ngIf="blockchain.blocks.length > 0">
+
+ <!--  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button  (click)="switchMode()" color="dark" [class.highlight]="blockchain.tableStyle === 'bootstrap'">
+      <ion-icon name="sunny"></ion-icon>
+    </ion-fab-button>
+  </ion-fab> -->
+
   <ion-refresher slot="fixed" (ionRefresh)="updateBlocks($event)">
     <ion-refresher-content
       [class.darkRefresh]="blockchain.tableStyle === 'dark'"

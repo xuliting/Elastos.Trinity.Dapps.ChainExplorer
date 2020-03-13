@@ -1,189 +1,173 @@
-<ion-header no-border>
-  <ion-toolbar mode="ios">
-    <ion-buttons slot="start" class="header-btns">
-      <ion-button (click)="goBack()">
-        <ion-icon mode="ios" name="arrow-back"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-title>Tx Details</ion-title>
-    <ion-buttons slot="end" class="header-btns">
-      <ion-menu-toggle>
-        <ion-icon src="../assets/icon/menu.svg"></ion-icon>
-      </ion-menu-toggle>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+  <ion-grid class="container ion-padding-top" [class.darkContainer]="blockchain.tableStyle === 'dark'">
 
-  <ion-content>
-    <ion-grid class="container ion-padding-top" [class.darkContainer]="blockchain.tableStyle === 'dark'">
+    <ion-row>
+      <ion-col class="tx-header">
+        <ion-img *ngIf="blockchain.tableStyle === 'bootstrap'" src="../assets/images/tx.png"></ion-img> &nbsp;
+        <div *ngIf="blockchain.tableStyle === 'dark'"><ion-icon name="send"></ion-icon></div> &nbsp;
+        <ion-label>{{ tx._id.slice(0,22) }} <br> {{ tx._id.slice(22,44) }} <br> {{ tx._id.slice(44,66) }}</ion-label>
+      </ion-col>
+    </ion-row>
 
+    <!-- Tx summary -->
+
+    <ion-row>
+      <ion-col size="12" class="section">
+        <h2>Transaction Summary</h2>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="details">
+      <h4>Received Time</h4>
+      <p>{{ getDate(tx.time)}} </p>
+    </ion-row>
+
+    <ion-row class="details">
+      <h4>Mined Time</h4>
+      <p>{{ getDate(tx.blocktime)}} </p>
+    </ion-row>
+
+    <ion-row class="details">
+      <h4>Size</h4>
+      <p>{{ fixNumber(tx.size) }}</p>
+    </ion-row>
+
+    <ion-row class="details">
+      <h4>Confirmations</h4>
+      <p>{{ tx.confirmations }}</p>
+    </ion-row>
+
+    <ion-row class="details">
+      <h4>Block Height</h4>
+      <p>{{ fixNumber(tx.blockheight) }}</p>
+    </ion-row>
+
+    <div class="overflow ion-margin-horizontal">
       <ion-row>
-        <ion-col class="tx-header">
-          <ion-img *ngIf="blockchain.tableStyle === 'bootstrap'" src="../assets/images/tx.png"></ion-img> &nbsp;
-          <div *ngIf="blockchain.tableStyle === 'dark'"><ion-icon name="send"></ion-icon></div> &nbsp;
-          <ion-label>{{ tx._id.slice(0,22) }} <br> {{ tx._id.slice(22,44) }} <br> {{ tx._id.slice(44,66) }}</ion-label>
-        </ion-col>
+        <h4>Block Hash</h4>
+        <p (click)="blockchain.blockDetails(tx.blockhash)" class="link ion-padding-top">
+          {{ tx.blockhash.slice(0,18) }}...
+          &nbsp; <ion-icon mode="ios" name="arrow-forward"></ion-icon>
+        </p>
       </ion-row>
+    </div>
 
-      <!-- Tx summary -->
+    <!-- Tx Details -->
 
-      <ion-row>
-        <ion-col size="12" class="section">
-          <h2>Transaction Summary</h2>
-        </ion-col>
+    <ion-row class="ion-padding-top">
+      <ion-col size="12" class="section">
+        <h2>Transaction Details</h2>
+      </ion-col>
+    </ion-row>
+
+    <div *ngIf="tx.isCoinBase">
+      <ion-row class="details">
+        <h4>Transaction Type</h4>
+        <p>Coins Generated</p>
       </ion-row>
 
       <ion-row class="details">
-        <h4>Received Time</h4>
-        <p>{{ getDate(tx.time)}} </p>
-      </ion-row>
-
-      <ion-row class="details">
-        <h4>Mined Time</h4>
-        <p>{{ getDate(tx.blocktime)}} </p>
-      </ion-row>
-
-      <ion-row class="details">
-        <h4>Size</h4>
-        <p>{{ fixNumber(tx.size) }}</p>
-      </ion-row>
-
-      <ion-row class="details">
-        <h4>Confirmations</h4>
-        <p>{{ tx.confirmations }}</p>
-      </ion-row>
-
-      <ion-row class="details">
-        <h4>Block Height</h4>
-        <p>{{ fixNumber(tx.blockheight) }}</p>
-      </ion-row>
-
-      <div class="overflow ion-margin-horizontal">
-        <ion-row>
-          <h4>Block Hash</h4>
-          <p (click)="blockchain.blockDetails(tx.blockhash)" class="link ion-padding-top">
-            {{ tx.blockhash.slice(0,18) }}...
+        <div>
+          <h4 *ngFor="let x of tx.vout">{{ x.value }}</h4>
+        </div>
+        <ion-img *ngIf="blockchain.tableStyle === 'bootstrap'" src="../assets/images/tx.png"></ion-img>
+        <div *ngIf="blockchain.tableStyle === 'dark'"><ion-icon name="send"></ion-icon></div>
+        <div>
+          <p *ngFor="let x of tx.vout" (click)="blockchain.addressDetails(x.scriptPubKey.addresses[0])" class="link">
+            {{ x.scriptPubKey.addresses[0].slice(0,18) }}...
             &nbsp; <ion-icon mode="ios" name="arrow-forward"></ion-icon>
           </p>
-        </ion-row>
-      </div>
-
-      <!-- Tx Details -->
-
-      <ion-row class="ion-padding-top">
-        <ion-col size="12" class="section">
-          <h2>Transaction Details</h2>
-        </ion-col>
+        </div>
       </ion-row>
 
-      <div *ngIf="tx.isCoinBase">
-        <ion-row class="details">
-          <h4>Transaction Type</h4>
-          <p>Coins Generated</p>
-        </ion-row>
+      <ion-row class="details">
+        <h4>Total Payout</h4>
+        <p>{{ tx.valueOut }} ELA</p>
+      </ion-row>
 
-        <ion-row class="details">
-          <div>
-            <h4 *ngFor="let x of tx.vout">{{ x.value }}</h4>
-          </div>
-          <ion-img *ngIf="blockchain.tableStyle === 'bootstrap'" src="../assets/images/tx.png"></ion-img>
-          <div *ngIf="blockchain.tableStyle === 'dark'"><ion-icon name="send"></ion-icon></div>
-          <div>
-            <p *ngFor="let x of tx.vout" (click)="blockchain.addressDetails(x.scriptPubKey.addresses[0])" class="link">
-              {{ x.scriptPubKey.addresses[0].slice(0,18) }}...
-              &nbsp; <ion-icon mode="ios" name="arrow-forward"></ion-icon>
-            </p>
-          </div>
-        </ion-row>
+      <ion-row class="details">
+        <h4>Fees</h4>
+        <p>{{ tx.fees }} ELA</p>
+      </ion-row>
+    </div>
 
-        <ion-row class="details">
-          <h4>Total Payout</h4>
-          <p>{{ tx.valueOut }} ELA</p>
-        </ion-row>
+    <div *ngIf="tx.vtype === 5">
+      <ion-row class="details">
+        <h4>Transaction Type</h4>
+        <p>Sidechain</p>
+      </ion-row>
 
-        <ion-row class="details">
-          <h4>Fees</h4>
-          <p>{{ tx.fees }} ELA</p>
-        </ion-row>
-      </div>
+      <ion-row class="details">
+        <h4>Sender</h4>
+        <p (click)="blockchain.addressDetails(tx.vin[0].addr)" class="link">
+          {{ tx.vin[0].addr.slice(0,18) }}...
+          &nbsp; <ion-icon mode="ios" name="arrow-forward"></ion-icon>
+        </p>
+      </ion-row>
 
-      <div *ngIf="tx.vtype === 5">
-        <ion-row class="details">
-          <h4>Transaction Type</h4>
-          <p>Sidechain</p>
-        </ion-row>
-
-        <ion-row class="details">
-          <h4>Sender</h4>
-          <p (click)="blockchain.addressDetails(tx.vin[0].addr)" class="link">
-            {{ tx.vin[0].addr.slice(0,18) }}...
+      <ion-row class="details">
+        <div>
+          <h4 *ngFor="let x of tx.vout">{{ x.value }}</h4>
+        </div>
+        <ion-img *ngIf="blockchain.tableStyle === 'bootstrap'" src="../assets/images/tx.png"></ion-img>
+        <div *ngIf="blockchain.tableStyle === 'dark'"><ion-icon name="send"></ion-icon></div>
+        <div>
+          <p *ngFor="let x of tx.vout" (click)="blockchain.addressDetails(x.scriptPubKey.addresses[0])" class="link">
+            {{ x.scriptPubKey.addresses[0].slice(0,18) }}...
             &nbsp; <ion-icon mode="ios" name="arrow-forward"></ion-icon>
           </p>
-        </ion-row>
+        </div>
+      </ion-row>
 
-        <ion-row class="details">
-          <div>
-            <h4 *ngFor="let x of tx.vout">{{ x.value }}</h4>
-          </div>
-          <ion-img *ngIf="blockchain.tableStyle === 'bootstrap'" src="../assets/images/tx.png"></ion-img>
-          <div *ngIf="blockchain.tableStyle === 'dark'"><ion-icon name="send"></ion-icon></div>
-          <div>
-            <p *ngFor="let x of tx.vout" (click)="blockchain.addressDetails(x.scriptPubKey.addresses[0])" class="link">
-              {{ x.scriptPubKey.addresses[0].slice(0,18) }}...
-              &nbsp; <ion-icon mode="ios" name="arrow-forward"></ion-icon>
-            </p>
-          </div>
-        </ion-row>
+      <ion-row class="details">
+        <h4>Total Payout</h4>
+        <p>{{ tx.valueOut }} ELA</p>
+      </ion-row>
 
-        <ion-row class="details">
-          <h4>Total Payout</h4>
-          <p>{{ tx.valueOut }} ELA</p>
-        </ion-row>
+      <ion-row class="details">
+        <h4>Fees</h4>
+        <p>{{ tx.fees }} ELA</p>
+      </ion-row>
+    </div>
 
-        <ion-row class="details">
-          <h4>Fees</h4>
-          <p>{{ tx.fees }} ELA</p>
-        </ion-row>
-      </div>
+    <div *ngIf="tx.vtype === 2">
+      <ion-row class="details">
+        <h4>Transaction Type</h4>
+        <p>Asset Transfer</p>
+      </ion-row>
 
-      <div *ngIf="tx.vtype === 2">
-        <ion-row class="details">
-          <h4>Transaction Type</h4>
-          <p>Asset Transfer</p>
-        </ion-row>
+      <ion-row class="details">
+        <h4>Sender</h4>
+        <p (click)="blockchain.addressDetails(tx.vin[0].addr)" class="link">
+          {{ tx.vin[0].addr.slice(0,18) }}...
+          &nbsp; <ion-icon mode="ios" name="arrow-forward"></ion-icon>
+        </p>
+      </ion-row>
 
-        <ion-row class="details">
-          <h4>Sender</h4>
-          <p (click)="blockchain.addressDetails(tx.vin[0].addr)" class="link">
-            {{ tx.vin[0].addr.slice(0,18) }}...
+      <ion-row class="details">
+        <div>
+          <h4 *ngFor="let x of tx.vout">{{ x.value }}</h4>
+        </div>
+        <ion-img *ngIf="blockchain.tableStyle === 'bootstrap'" src="../assets/images/tx.png"></ion-img>
+        <div *ngIf="blockchain.tableStyle === 'dark'"><ion-icon name="send"></ion-icon></div>
+        <div>
+          <p *ngFor="let x of tx.vout" (click)="blockchain.addressDetails(x.scriptPubKey.addresses[0])" class="link">
+            {{ x.scriptPubKey.addresses[0].slice(0,18) }}...
             &nbsp; <ion-icon mode="ios" name="arrow-forward"></ion-icon>
           </p>
-        </ion-row>
+        </div>
+      </ion-row>
 
-        <ion-row class="details">
-          <div>
-            <h4 *ngFor="let x of tx.vout">{{ x.value }}</h4>
-          </div>
-          <ion-img *ngIf="blockchain.tableStyle === 'bootstrap'" src="../assets/images/tx.png"></ion-img>
-          <div *ngIf="blockchain.tableStyle === 'dark'"><ion-icon name="send"></ion-icon></div>
-          <div>
-            <p *ngFor="let x of tx.vout" (click)="blockchain.addressDetails(x.scriptPubKey.addresses[0])" class="link">
-              {{ x.scriptPubKey.addresses[0].slice(0,18) }}...
-              &nbsp; <ion-icon mode="ios" name="arrow-forward"></ion-icon>
-            </p>
-          </div>
-        </ion-row>
+      <ion-row class="details">
+        <h4>Total Payout</h4>
+        <p>{{ tx.valueOut }} ELA</p>
+      </ion-row>
 
-        <ion-row class="details">
-          <h4>Total Payout</h4>
-          <p>{{ tx.valueOut }} ELA</p>
-        </ion-row>
+      <ion-row class="details">
+        <h4>Fees</h4>
+        <p>{{ tx.fees }} ELA</p>
+      </ion-row>
+    </div>
 
-        <ion-row class="details">
-          <h4>Fees</h4>
-          <p>{{ tx.fees }} ELA</p>
-        </ion-row>
-      </div>
-
-    </ion-grid>
-  </ion-content>
+  </ion-grid>
+</ion-content>

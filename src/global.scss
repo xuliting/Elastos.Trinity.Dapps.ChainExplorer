@@ -128,7 +128,9 @@ ion-tab-bar {
 
 /*** Datatable Rows ***/
 .highlight {
-  color: #ffd31a;
+  ion-icon {
+    color: #ffd31a;
+  }
 }
 
 .isEven {
