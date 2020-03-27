@@ -29,7 +29,7 @@
     <ion-list class="ion-no-padding ion-no-margin">
       <ngx-datatable
         [rows]="blockchain.blocks"
-        [ngClass]="tableStyle"
+        [ngClass]="blockchain.tableStyle"
         [rowHeight]="'auto'"
         [headerHeight]="40"
         [rowClass]="getRowClass.bind(this)"

@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { LoadingController, AlertController } from '@ionic/angular';
+import { LoadingController, AlertController, Platform } from '@ionic/angular';
 import { Router, NavigationExtras } from '@angular/router';
 
 import { Block, FormattedBlock } from '../models/blocks.model';
@@ -9,6 +9,9 @@ import { Status } from '../models/status.model';
 import { StorageService } from './storage.service';
 import { Mainchain, Price, Voters, _Block } from '../models/stats.model';
 import { Tx } from '../models/tx.model';
+
+declare let appManager: AppManagerPlugin.AppManager;
+declare let titleBarManager: TitleBarPlugin.TitleBarManager;
 
 @Injectable({
   providedIn: 'root'
@@ -37,11 +40,13 @@ export class BlockchainService {
   public proxyurl = "https://cors-anywhere.herokuapp.com/";
 
   constructor(
-    public storage: StorageService,
+    private platform: Platform,
     private http: HttpClient,
     private router: Router,
     private alertCtrl: AlertController,
     public loadingCtrl: LoadingController,
+    private zone: NgZone,
+    public storage: StorageService,
   ) { }
 
   init() {
@@ -50,7 +55,42 @@ export class BlockchainService {
     this.fetchBlocks();
     this.fetchStatus();
     this.fetchRanks();
+
+  /*   if (this.platform.platforms().indexOf("cordova") >= 0) {
+      console.log("Listening to intent events");
+      appManager.setListener((msg) => {
+        this.onMessageReceived(msg);
+      });
+    } */
   }
+
+  /* onMessageReceived(ret: AppManagerPlugin.ReceivedMessage) {
+    let params: any = ret.message;
+    if (typeof (params) === 'string') {
+        try {
+            params = JSON.parse(params);
+        } catch (e) {
+            console.log('Params are not JSON format: ', params);
+        }
+    }
+
+    if(params.action === 'preferenceChanged') {
+      if (params.data.key === "ui.darkmode") {
+        this.zone.run(() => {
+            console.log(params.data.value);
+            if(params.data.value) {
+              this.tableStyle = 'dark';
+              titleBarManager.setBackgroundColor("#1b1e27");
+              titleBarManager.setForegroundMode(TitleBarPlugin.TitleBarForegroundMode.LIGHT);
+            } else {
+              this.tableStyle = 'bootstrap'
+              titleBarManager.setBackgroundColor("#000000");
+              titleBarManager.setForegroundMode(TitleBarPlugin.TitleBarForegroundMode.LIGHT);
+            }
+        });
+      }
+    }
+  } */
 
   /******************************** Get Block/Tx/Rank/Status  ********************************/
   fetchStats() {
