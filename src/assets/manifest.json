@@ -12,12 +12,12 @@
   "category": "tools",
   "icons": [
     {
-      "src": "assets/icon/logo.png",
+      "src": "assets/images/logo.png",
       "sizes": "512x512",
       "type": "image/png"
     },
     {
-      "src": "assets/icon/logo.png",
+      "src": "assets/images/logo.png",
       "sizes": "128x128",
       "type": "image/png"
     }
