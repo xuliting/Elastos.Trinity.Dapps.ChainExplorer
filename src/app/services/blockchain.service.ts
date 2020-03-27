@@ -56,15 +56,15 @@ export class BlockchainService {
     this.fetchStatus();
     this.fetchRanks();
 
-  /*   if (this.platform.platforms().indexOf("cordova") >= 0) {
+    if (this.platform.platforms().indexOf("cordova") >= 0) {
       console.log("Listening to intent events");
       appManager.setListener((msg) => {
         this.onMessageReceived(msg);
       });
-    } */
+    }
   }
 
-  /* onMessageReceived(ret: AppManagerPlugin.ReceivedMessage) {
+  onMessageReceived(ret: AppManagerPlugin.ReceivedMessage) {
     let params: any = ret.message;
     if (typeof (params) === 'string') {
         try {
@@ -78,7 +78,7 @@ export class BlockchainService {
       if (params.data.key === "ui.darkmode") {
         this.zone.run(() => {
             console.log(params.data.value);
-            if(params.data.value) {
+       /*      if(params.data.value) {
               this.tableStyle = 'dark';
               titleBarManager.setBackgroundColor("#1b1e27");
               titleBarManager.setForegroundMode(TitleBarPlugin.TitleBarForegroundMode.LIGHT);
@@ -86,11 +86,11 @@ export class BlockchainService {
               this.tableStyle = 'bootstrap'
               titleBarManager.setBackgroundColor("#000000");
               titleBarManager.setForegroundMode(TitleBarPlugin.TitleBarForegroundMode.LIGHT);
-            }
+            } */
         });
       }
     }
-  } */
+  }
 
   /******************************** Get Block/Tx/Rank/Status  ********************************/
   fetchStats() {
