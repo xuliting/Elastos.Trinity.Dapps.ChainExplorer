@@ -16,6 +16,10 @@ export class StatusPage implements OnInit {
     this.tableStyle = this.blockchain.tableStyle;
   }
 
+  ionViewWillEnter() {
+    this.blockchain.setTitleBarBackKeyShown(false);
+  }
+
   fixNumber(number: number): string {
     return number.toLocaleString().split(/\s/).join(',');
   }

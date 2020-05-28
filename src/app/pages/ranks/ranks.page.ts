@@ -21,6 +21,10 @@ export class RanksPage implements OnInit {
     this.tableStyle = this.blockchain.tableStyle;
   }
 
+  ionViewWillEnter() {
+    this.blockchain.setTitleBarBackKeyShown(false);
+  }
+
   searchAddress() {
     if(!this.address) {
       console.log('Input empty');

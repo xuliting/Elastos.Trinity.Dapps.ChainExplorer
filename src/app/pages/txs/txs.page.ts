@@ -17,6 +17,10 @@ export class TxsPage implements OnInit {
     this.tableStyle = this.blockchain.tableStyle;
   }
 
+  ionViewWillEnter() {
+    this.blockchain.setTitleBarBackKeyShown(false);
+  }
+
   searchTx() {
     if(!this.tx) {
       console.log('Input empty');

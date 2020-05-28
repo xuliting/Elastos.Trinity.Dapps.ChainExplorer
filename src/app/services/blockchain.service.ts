@@ -1,6 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { LoadingController, AlertController, Platform } from '@ionic/angular';
+import { LoadingController, AlertController, Platform, NavController } from '@ionic/angular';
 import { Router, NavigationExtras } from '@angular/router';
 
 import { Block, FormattedBlock } from '../models/blocks.model';
@@ -45,6 +45,7 @@ export class BlockchainService {
     private router: Router,
     private alertCtrl: AlertController,
     public loadingCtrl: LoadingController,
+    private navCtrl: NavController,
     private zone: NgZone,
     public storage: StorageService,
   ) { }
@@ -60,6 +61,11 @@ export class BlockchainService {
       console.log("Listening to intent events");
       appManager.setListener((msg) => {
         this.onMessageReceived(msg);
+      });
+      titleBarManager.addOnItemClickedListener((menuIcon) => {
+        if (menuIcon.key === "back") {
+            this.navCtrl.back();
+        }
       });
     }
   }
@@ -89,6 +95,18 @@ export class BlockchainService {
             } */
         });
       }
+    }
+  }
+
+  setTitleBarBackKeyShown(show: boolean) {
+    if (show) {
+      titleBarManager.setIcon(TitleBarPlugin.TitleBarIconSlot.INNER_LEFT, {
+        key: "back",
+        iconPath: TitleBarPlugin.BuiltInIcon.BACK
+      });
+    }
+    else {
+      titleBarManager.setIcon(TitleBarPlugin.TitleBarIconSlot.INNER_LEFT, null);
     }
   }
 

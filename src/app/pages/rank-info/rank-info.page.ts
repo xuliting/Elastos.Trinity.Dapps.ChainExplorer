@@ -50,6 +50,10 @@ export class RankInfoPage implements OnInit {
     this.findRank();
   }
 
+  ionViewWillEnter() {
+    this.blockchain.setTitleBarBackKeyShown(true);
+  }
+
   ionViewDidEnter() {
     if(this.blockchain.loader) {
       this.blockchain.loadingCtrl.dismiss();

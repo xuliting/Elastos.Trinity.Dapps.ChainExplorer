@@ -23,6 +23,10 @@ export class BlocksPage implements OnInit {
     this.tableStyle = this.blockchain.tableStyle;
   }
 
+  ionViewWillEnter() {
+    this.blockchain.setTitleBarBackKeyShown(false);
+  }
+
   ionViewDidEnter() {
     appManager.setVisible("show", ()=>{}, (err)=>{});
   }

@@ -31,6 +31,10 @@ export class TransInfoPage implements OnInit {
     });
   }
 
+  ionViewWillEnter() {
+    this.blockchain.setTitleBarBackKeyShown(true);
+  }
+
   ionViewDidEnter() {
     if(this.blockchain.loader) {
       this.blockchain.loadingCtrl.dismiss();
